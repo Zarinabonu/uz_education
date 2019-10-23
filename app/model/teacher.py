@@ -12,4 +12,5 @@ class Teacher(models.Model):
     work_place = models.TextField(null=True, blank=True)
     passport_series = models.TextField(null=True, blank=True)
     phone = models.IntegerField(null=True, blank=True)
+    created = models.DateField(auto_now_add=True)
 
