@@ -1,0 +1,132 @@
+{% extends 'administrator/_base.html' %}
+{% load static i18n %}
+
+{% block content %}
+    <div class="content-title">
+        <h2>Типы медицинских учреждений</h2>
+    </div>
+    <div class="card-main">
+        <div class="card-main__header">
+            <h2>Список</h2>
+        </div>
+        <div class="card-main__content">
+            <div class="search-form__app">
+                <form method="GET">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Названия</label>
+                            <input name="name" type="text" class="form-control" id="" value="{{ name }}">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="search-buttons">
+                            <div class="form-search__button" id="">
+                                <button id="" type="submit">Поиск</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="float: right;text-align: right">
+                        <div class="add-buttons">
+{#                            <div class="deletePart-buttons">#}
+{#                                <button id="deletePGroupButton" data-url="#">{% trans 'Delete' %}</button>#}
+{#                            </div>#}
+                            <div class="form-add__button" id="">
+                                <a id="addButton" href="#intitution-type-popup" class="open-intitution-type-link">Добавить</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+            <div class="search-results__main">
+                <div class="table-main">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr class="table-row" data-href="#">
+                            <th class="td-check"></th>
+                            <th class="td-id">№</th>
+                            <th class="td-name">Названия</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for institution_type in institution_types %}
+                                <tr class="table-row" data-id="{{institution_type.id}}" data-href="#">
+                                    <td class="td-checkbox td-check" >
+                                        <input class="deleteCheck" type="checkbox" data-id="{{institution_type.id}}" name="ids" >
+                                    </td>
+                                    <td class="td-id">{{ institution_type.id }}</td>
+                                    <td class="td-name">{{ institution_type.name }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% include 'lib/pagination.html' %}
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div id="intitution-type-popup" class="create-popup white-popup mfp-hide">
+        <form class="login">
+            <fieldset>
+
+                <legend class="legend">Добавить</legend>
+                <div class="popup-content">
+                    <div class="popup-content__item">
+                        <div class="form-group">
+                            <label for="name">Названия</label>
+                            <input name="name" type="text" class="form-control" id="name">
+                        </div>
+                    </div>
+                </div>
+                <div class="save-buttons">
+                    <button id="saveButton" type="submit" class="saveButton" data-url="{% url 'institution-type.create.api' %}">
+                        Сохранить
+                    </button>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="{% static 'operator/js/root/search.js' %}"></script>
+    <script>
+        $(function () {
+            $('.open-intitution-type-link').magnificPopup({
+                type: 'inline',
+                midClick: true,
+                mainClass: 'mfp-fade'
+            });
+
+            $("#saveButton").click(function (event) {
+                event.preventDefault();
+
+                let formData = new FormData();
+                formData.append("name", $("input[name='name']").val());
+
+                $.ajax({
+                    url: $(this).data("url"),
+                    data: formData,
+                    type: "POST",
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        var x = document.getElementById("mainSuccess");
+                        x.className = "show";
+                        setTimeout(function(){
+                            x.className = x.className.replace("show", "");
+                            location.reload();
+                        }, 1500);
+                    },
+                    error: function (data) {
+                        var x = document.getElementById("mainError");
+
+                        x.className = "show";
+                        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

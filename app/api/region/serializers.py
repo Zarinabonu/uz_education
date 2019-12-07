@@ -6,12 +6,12 @@ from app.model import Region
 
 
 class RegionSerializer(ModelSerializer):
-    city_id = CitySerializer(read_only=True)
-    city_id_id = serializers.IntegerField(write_only=True)
+    city = CitySerializer(read_only=True)
+    city_id = serializers.IntegerField(write_only=True)
 
     class Meta:
         model = Region
-        fields = ('city_id',
-                  'city_id_id',
+        fields = ('city',
+                  'city_id',
                   'name',
                   )

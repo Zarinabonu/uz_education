@@ -1,0 +1,251 @@
+html, body{
+}
+
+.block-login-site{
+	height: 100vh;
+	overflow: hidden;
+}
+
+.disabledBlock {
+    pointer-events: none;
+    opacity: 0.4;
+}
+@font-face {
+	font-family: "Geometria-Light";
+	src: url("../fonts/Geometria-Light.ttf");
+	src: url("../fonts/Geometria-Light.ttf") format("truetype");
+	font-style: normal;
+	font-weight: normal;
+}
+
+@font-face {
+  font-family: "Rubik-Light";
+  src: url("../../operator/fonts/Rubik/RubikLight.ttf");
+  src: url("../../operator/fonts/Rubik/RubikLight.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Rubik-Medium";
+  src: url("../../operator/fonts/Rubik/RubikMedium.ttf");
+  src: url("../../operator/fonts/Rubik/RubikMedium.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Rubik-Bold";
+  src: url("../../operator/fonts/Rubik/RubikBold.ttf");
+  src: url("../../operator/fonts/Rubik/RubikBold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Rubik-Regular";
+  src: url("../../operator/fonts/Rubik/RubikRegular.ttf");
+  src: url("../../operator/fonts/Rubik/RubikRegular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+
+
+*{
+	font-family: Geometria-Light, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+a{
+	color: #ffff;
+	text-decoration: none;
+}
+.aside-login__main{
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	height: 100vh;
+}
+.d-flex{
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+}
+.block{
+	width: 38%;
+}
+
+.block-1{
+	background: #004d93;
+	justify-content: center;
+	align-items: center;
+}
+
+.user-list__container{
+	justify-content: center;
+}
+
+ul.d-flex{
+	flex-direction: column;
+}
+
+ul.d-flex li{
+	margin-top: 25px;
+	align-items: center;
+}
+ul.d-flex li div{
+	margin-left: 10px;
+}
+
+ul.d-flex li div i{
+	color: #e0e8ed;
+	font-weight: 600;
+}
+
+ul.d-flex li  a{
+	color: #e0e8ed;
+	cursor: pointer;
+}
+
+ul.d-flex li  a:hover{
+	color: #5e83a0;
+}
+
+ul.d-flex li  a.active {
+	color: #03dc00;
+}
+
+ul.d-flex li a span{
+	font-size: 16px;
+	text-align: left;
+	margin-left: 8px;
+}
+
+.block-2{
+	background: #ffff;
+	width: 24%;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+}
+.login-page__container{
+}
+
+.login-page__logo{
+	text-align: center;
+	margin-bottom: 40px;
+	margin-top: -100px;
+}
+
+.login-page__logo img{
+    width: 235px;
+}
+.login-page__form-container{
+	padding-left: 75px;
+	padding-right: 75px;
+	width: 280px;
+}
+
+.login-page__form{
+}
+
+.login-page__form-inp{
+	position: relative;
+	margin-bottom: 20px;
+}
+
+.login-page__form-inp label{
+	padding-bottom: 8px;
+    display: block;
+    font-weight: 600;
+}
+.login-page__form-inp input{
+	border: 1px solid #d8d8d8;
+	width: 100%;
+	height: 42px;
+	border-radius: 5px;
+	text-indent: 30px;
+	font-size: 18px;
+}
+.login-page__form-inp img{
+	position: absolute;
+	top: 38px;
+	left: 10px;
+	color: #00416a;
+	width: 15px;
+	height: 18px;
+}
+
+.login-page__form-enterBtn{
+	margin-top: 30px;
+}
+
+#enterBtn:hover{
+	background: #053e71;
+}
+
+.login-page__form-enterBtn button{
+	width: 100%;
+	height: 40px;
+	border-radius: 50px;
+	cursor: pointer;
+	border: 0;
+	background: #004d93;
+	color: #fff;
+	font-size: 16px;
+	text-transform: uppercase;
+    outline: none;
+    font-family: Rubik-Medium, sans-serif;
+}
+
+.login-page__form-link-forgot-password{
+	width: 100%;
+	margin-top: 30px;
+	text-align: center;
+}
+.login-page__form-link-forgot-password a{
+    color: #004d93;
+    font-family: Rubik-Regular, sans-serif;
+    border-bottom: 1px solid;
+}
+
+.login-page__form-footer{
+    text-align: center;
+    position: absolute;
+    bottom: 40px;
+    width: 100%;
+    left: 0;
+}
+
+.login-page__form-footer span{
+	color: #2f3941;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.block-3{
+	background: rgba(2, 43, 80, 0.6);
+	height: auto;
+}
+.img-page__container{
+	width: 100%;
+	height: auto;
+	background: url("../login-page/img/block3.png") no-repeat;
+	background-size: cover;
+	background-position: center;
+	z-index: -1;
+}
+
+/*Error*/
+
+.login-page__form-error{
+	text-align: center;
+}
+
+.login-page__form-error span{
+	color: red;
+	font-weight: 600;
+	text-decoration: underline;
+}

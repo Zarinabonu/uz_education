@@ -1,0 +1,184 @@
+{% extends 'administrator/_base.html' %}
+{% load static i18n %}
+
+{% block css %}
+    <style>
+        .charts-main{
+            padding: 105px 15px;
+            width: 100%;
+            text-align: center;
+        }
+        .charts-title span{
+            font-size: 18px;
+            font-family: Rubik-Medium, sans-serif;
+            margin: 0;
+            color: #0f87ff;
+        }
+        #chartdiv {
+          width: 100%;
+          height: 460px;
+            padding: 0 15px;
+        }
+        #chartdiv0 {
+          width: 100%;
+          height: 460px;
+            padding: 0 15px;
+        }
+        @media (max-width: 1480px) {
+            .charts-main{
+                padding: 15px 15px;
+            }
+            .charts-title span{
+                font-size: 16px;
+            }
+            #chartdiv {
+                height: 420px;
+            }
+            #chartdiv0 {
+                height: 420px;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="content-title">
+        <h2>Статистика</h2>
+    </div>
+    <div class="card-main">
+        <div class="card-main__header">
+            <h2>Статистика Узбекистана</h2>
+        </div>
+        <div class="card-main__content">
+
+            <div class="charts-main">
+                <!-- HTML -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div id="chartdiv"></div>
+                        <div class="charts-title">
+                            <span>По районам</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="chartdiv0"></div>
+                        <div class="charts-title">
+                            <span>По возрасту</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="yearsGender-chart">
+                <div class="gender-chart">
+                    <h2>По полу</h2>
+                    <ul>
+                        <li>Мужчины: {{ male_cnt }}</li>
+                        <li>Женщины: {{ female_cnt }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <!-- Resources -->
+    <script src="https://www.amcharts.com/lib/4/core.js"></script>
+    <script src="https://www.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
+    <!-- Chart code -->
+    <script>
+        am4core.ready(function() {
+
+            // Themes begin
+            am4core.useTheme(am4themes_animated);
+            // Themes end
+
+            // Create chart instance
+            var chart = am4core.create("chartdiv", am4charts.PieChart);
+            chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+
+            // Add data
+            chart.data = [
+                {% for city in cities %}
+                {
+              "id": {{ city.id }},
+              "country": "{{city.name_ru}}",
+              "litres": {{ city.getDoctorCount }}
+            },
+                {% endfor %}
+            ];
+
+            // Add and configure Series
+            var pieSeries = chart.series.push(new am4charts.PieSeries());
+            pieSeries.dataFields.value = "litres";
+            pieSeries.dataFields.category = "country";
+            pieSeries.dataFields.id = "id";
+            pieSeries.slices.template.stroke = am4core.color("#fff");
+            pieSeries.slices.template.strokeWidth = 0;
+            pieSeries.slices.template.strokeOpacity = 1;
+
+            pieSeries.labels.template.disabled = true;
+
+            // Set up tooltips
+            pieSeries.tooltip.label.interactionsEnabled = true;
+            pieSeries.tooltip.keepTargetHover = true;
+            pieSeries.slices.template.tooltipHTML = '<b>{category} ({litres})</b><br><a href="/administrator/statistics/{id.urlEncode()}">Подробное</a>';
+
+            // This creates initial animation
+            pieSeries.hiddenState.properties.opacity = 1;
+            pieSeries.hiddenState.properties.endAngle = -90;
+            pieSeries.hiddenState.properties.startAngle = -90;
+
+        }); // end am4core.ready()
+
+        am4core.ready(function() {
+
+            // Themes begin
+            am4core.useTheme(am4themes_animated);
+            // Themes end
+
+            var chart = am4core.create("chartdiv0", am4charts.PieChart);
+            chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+
+            chart.data = [
+                {% for age in by_ages %}
+                    {
+                        name: "{{ age.range }}",
+                        value: {{age.doctor_count}}
+                        {#value: {{ forloop.counter }}#}
+                    },
+                {% endfor %}
+            ];
+            chart.radius = am4core.percent(70);
+            chart.innerRadius = am4core.percent(40);
+            chart.startAngle = 180;
+            chart.endAngle = 360;
+
+            var series = chart.series.push(new am4charts.PieSeries());
+            series.dataFields.value = "value";
+            series.dataFields.category = "name";
+
+            series.slices.template.cornerRadius = 10;
+            series.slices.template.innerCornerRadius = 7;
+            series.slices.template.draggable = false;
+            series.slices.template.inert = true;
+            series.alignLabels = false;
+
+            series.labels.template.disabled = true;
+
+
+            series.hiddenState.properties.startAngle = 90;
+            series.hiddenState.properties.endAngle = 90;
+
+            //chart.legend = new am4charts.Legend();
+
+        }); // end am4core.ready()
+
+
+    </script>
+{% endblock %}

@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 class Operator(models.Model):
-    city_id = models.ForeignKey(City, on_delete=models.SET_NULL, null=True)
-    user_id = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
+    city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True)
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
     m_name = models.TextField(null=True, blank=True)
     phone = models.IntegerField(null=True, blank=True)

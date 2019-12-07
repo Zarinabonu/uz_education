@@ -1,0 +1,137 @@
+{% extends 'administrator/_base.html' %}
+{% load static i18n %}
+
+{% block content %}
+    <div class="content-title">
+            <h2>O'qituvchilarni ro'yxatga olish</h2>
+        </div>
+        <div class="card-main">
+            <div class="card-main__header">
+                <h2>Ro'yxatga olish shakli</h2>
+            </div>
+            <div class="card-main__content">
+                <form>
+                    <div class="dr-head__main">
+                        <div class="row">
+                            <div class="dr-head__col">
+                                <div class="dr-head__item">
+                                    <div class="form-group">
+                                        <label for="fullName">Familiya</label>
+                                        <input name="f_name" type="text" class="form-control" id="fullName">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dr-head__col">
+                                <div class="dr-head__item">
+                                    <div class="form-group">
+                                        <label for="fullName">Ismi</label>
+                                        <input name="l_name" type="text" class="form-control" id="fullName">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dr-head__col">
+                                <div class="dr-head__item">
+                                    <div class="form-group">
+                                        <label for="fullName">Otasining ismi</label>
+                                        <input name="m_name" type="text" class="form-control" id="fullName">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dr-head__col">
+                                <div class="dr-head__item">
+                                    <div class="form-group">
+                                        <label for="passportSerial">Pasport seriyasi</label>
+                                        <input name="passport_serial" type="text" class="form-control" id="passportSerial">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <hr class="main-hr">
+                    </div>
+                    <div class="dr-head__content">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="dr-head-content__item">
+                                    <div class="title">
+                                        <h2>Ma'lumoti</h2>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nameOfUniversity">Shaxar nomi</label>
+                                        <select class="form-control selectpicker show-tick" name="region" id="region">
+                                            {% for region in region_id %}
+                                            <option value="{{ region.id }}">{{ region.name }}</option>
+
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="work_place">Ishlash joyi</label>
+                                        <input name="work_place" type="text" class="form-control" id="work_place">
+                                    </div>
+
+                                     <div class="form-group">
+                                        <label for="phone">Telefon raqami</label>
+                                        <input name="phone" type="text" class="form-control" id="phone">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-send__buttons">
+                        <div class="form-send__button">
+                            <button id="formSendButton" type="submit" data-url="{% url 'api-teacher-create' %}">Сохранить</button>
+                        </div>
+                        <!--<div class="form-reset__buttton">
+                            <button type="reset">Очистить</button>
+                        </div>-->
+                    </div>
+                </form>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+{% endblock %}
+{% block js %}
+    <script>
+        $(function () {
+            $("#formSendButton").click(function (event) {
+                event.preventDefault();
+
+                let formData = new FormData();
+                formData.append("f_name", $("input[name='f_name']").val());
+                formData.append("l_name", $("input[name='l_name']").val());
+                formData.append("m_name", $("input[name='m_name']").val());
+                formData.append("passport_series", $("input[name='passport_series']").val());
+                formData.append("work_place", $("input[name='work_place']").val());
+                formData.append("phone", $("input[name='phone']").val());
+                formData.append('region_id', $('select[name="region"]').val());
+
+
+                $.ajax({
+                    url: $(this).data("url"),
+                    data: formData,
+                    type: "POST",
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        var x = document.getElementById("mainSuccess");
+                        x.className = "show";
+                        setTimeout(function(){
+                            x.className = x.className.replace("show", "");
+                            location.reload();
+                        }, 1500);
+                    },
+                    error: function (data) {
+                        var x = document.getElementById("mainError");
+
+                        x.className = "show";
+                        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

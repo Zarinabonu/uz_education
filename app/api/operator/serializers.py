@@ -7,8 +7,8 @@ from app.model import Operator
 
 
 class OperatorSerializer(ModelSerializer):
-    city_id = CitySerializer(read_only=True)
-    city_id_id = serializers.IntegerField(write_only=True)
+    city = CitySerializer(read_only=True)
+    city_id = serializers.IntegerField(write_only=True)
     first_name = serializers.CharField(max_length=100, write_only=True)
     last_name = serializers.CharField(max_length=100, write_only=True)
     username = serializers.CharField(write_only=True)
@@ -22,8 +22,8 @@ class OperatorSerializer(ModelSerializer):
                   'last_name',
                   'm_name',
                   'phone',
+                  'city',
                   'city_id',
-                  'city_id_id',
                   )
 
     def create(self, validated_data):

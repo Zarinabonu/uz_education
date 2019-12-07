@@ -1,0 +1,244 @@
+{% extends 'administrator/_base.html' %}
+{% load static i18n %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'operator/chosen_v1.8.7/chosen.min.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="content-title">
+        <h2>Рассылка СМС, E-mail</h2>
+    </div>
+    <div class="card-main">
+        <div class="card-main__header">
+            <h2>Отправить</h2>
+        </div>
+        <div class="card-main__content">
+            <div class="sms-send__main">
+                <div class="send-form">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="select_app">
+                                <div class="search-form">
+                                    <form action=""> <!-- TODO filter values in form -->
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="">Ф.И.О</label>
+                                                    <input name="fullname" type="text" class="form-control" id="" value="{{ fullname }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="">Область</label>
+                                                    <select class="form-control selectpicker show-tick" name="region" id="">
+                                                        <option value="">Выберите</option>
+                                                        {% for city in cities %}
+                                                            <option value="{{ city.name_ru }}" {% if city.name_ru == region %}selected{% endif %}>{{ city.name_ru }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="search-buttons">
+                                                    <div class="form-search__button" id="">
+                                                      <button id="" type="submit">{% trans 'Поиск' %}</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="search-results">
+                                    <div class="table-main table-for_sms">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr class="table-row" data-href="#">
+                                                <th class="" width="1%">
+                                                    <input id="selectAll" type="checkbox" name="ids_all" >
+                                                </th>
+                                               <th class="" width="80">{% trans 'Ф.И.О.' %}</th>
+                                                <th class="" width="1%">{% trans 'Номер телефона' %}</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for doctor in doctors %}
+                                                <tr class="table-row" data-id="{{ doctor.id }}">
+                                                    <td class="td-checkbox">
+                                                        <input class="selectCheck" type="checkbox" data-id="{{doctor.id}}" name="ids" >
+                                                    </td>
+                                                    <td>{{ doctor.full_name }}</td>
+                                                    <td>{{ doctor.phone }}</td>
+
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <form role="form">
+                                <div class="form-group">
+                                    <label for="titleMessage">{% trans 'Заголовок сообщения' %}</label>
+                                    <input type="text" id="titleMessage" name="title_message" value="{{ template.title }}" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleText">{% trans 'Содержания сообщения' %}</label>
+                                    <textarea id="exampleText" name="text">{{ template.text }}
+
+                                    </textarea>
+                                </div>
+                                <div class="send-message__main" style="overflow: hidden;">
+                                    <div class="form-group checkbox-form">
+                                        <div class="checkbox-group">
+                                            <input type="checkbox" id="sendSMS" name="send_sms" checked>
+                                            <label for="sendSMS">
+                                                <span>СМС</span>
+                                            </label>
+                                        </div>
+                                        <div class="checkbox-group">
+                                            <input type="checkbox" id="sendEmail" name="send_email">
+                                            <label for="sendEmail">
+                                                <span>Э-Почта</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="send-buttons">
+{#                                    <button class="saveMessageButton" data-api="#"> {% trans 'Сохранить' %}</button>#}
+                                    <button class="sendMessageButton" data-api="{% url 'message-send-api' %}"><i class="fa fa-paper-plane" aria-hidden="true"></i> {% trans 'Отправить' %}</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div id="sendSuccess">Успешно отправлено</div>
+        <div id="sendError">Произошла ошибка</div>
+        <div id="saveSuccess">Успешно сохранено</div>
+        <div id="saveError">Произошла ошибка</div>
+    </div>
+{% endblock %}
+
+{% block js %}
+
+    <script>
+        $(document).ready(function() {
+            $('.table tbody tr').click(function(event) {
+                if (event.target.type !== 'checkbox') {
+                    $(':checkbox', this).trigger('click');
+                }
+            });
+            $('#selectAll').click(function(e){
+                var table= $(e.target).closest('table');
+                $('td input:checkbox',table).prop('checked',this.checked);
+            });
+        });
+    </script>
+    <script src="{% static 'operator/tinymce/js/tinymce/tinymce.min.js' %}"></script>
+
+    <script>
+        tinymce.init({
+            selector: "textarea#exampleText",
+            theme: "modern",
+            width: '100%',
+            height: 240,
+            plugins: [
+                'advlist autolink lists link image charmap preview hr anchor pagebreak',
+                'searchreplace wordcount visualblocks visualchars code',
+                'insertdatetime nonbreaking table contextmenu directionality',
+                'emoticons template paste textcolor colorpicker textpattern imagetools codesample'
+            ],
+            toolbar: 'bold italic sizeselect fontsizeselect | hr alignleft aligncenter alignjustify | bullist numlist | emoticons | code',
+            fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+            branding: false,
+            menubar: false
+        });
+        $('.sendMessageButton').click(function(e){
+            e.preventDefault();
+            let $formData = new FormData();
+            var exampleContent = tinymce.get('exampleText').getContent();
+            var action = '';
+
+            if($("input[name='send_sms']:checked").val() && $("input[name='send_email']:checked").val()){
+                action = 'sms&email';
+            }else if($("input[name='send_sms']:checked").val()){
+                action = 'sms';
+            }else if($("input[name='send_email']:checked").val()){
+                action = 'email';
+            }
+
+            var mySelectData = jQuery(".table tr:not(.header) td input:checked").map(function() {
+                return jQuery(this).closest("tr").data("id");
+            }).get();
+
+            $formData.append("title", $('#titleMessage').val());
+            $formData.append("action", action);
+
+            $formData.append('ids', mySelectData);
+
+            $formData.append("text", exampleContent);
+
+            $.ajax({
+                url: $(this).data('api'),
+                type: "POST",
+                data: $formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    var x = document.getElementById("sendSuccess");
+                    x.className = "show";
+                    setTimeout(function(){
+                        x.className = x.className.replace("show", "");
+                        window.location.href = '/root/templates/list/';
+                    }, 150000);
+                },
+                error: function (data) {
+                    var x = document.getElementById("sendError");
+
+                    x.className = "show";
+                    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                }
+            });
+        });
+        $('.saveMessageButton').click(function(e){
+            e.preventDefault();
+
+            let $formData = new FormData();
+            var exampleContent = tinymce.get('exampleText').getContent();
+
+            $formData.append("title", $('#titleMessage').val());
+            $formData.append("text", exampleContent);
+
+            var url = $(this).data('api');
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: $formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    var x = document.getElementById("saveSuccess");
+                    x.className = "show";
+                    setTimeout(function(){
+                        x.className = x.className.replace("show", "");
+                        {#window.location.href = '/root/templates/list/';#}
+                    }, 1500);
+                },
+                error: function (data) {
+                    var x = document.getElementById("saveError");
+
+                    x.className = "show";
+                    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

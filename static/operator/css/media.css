@@ -1,0 +1,400 @@
+@media (max-width: 1780px) {
+	.photos-human__main {
+		padding: 40px 75px 5px;
+	}
+}
+@media (max-width: 1680px) {
+	.photos-human__main {
+		padding: 40px 45px 5px;
+	}
+	.opView-images {
+    	width: 440px;
+	}
+	.opView-tab__content {
+    	width: calc(100% - 440px);
+	}
+	.opView-images .opView-images__block .opView-images__item {
+    	height: 224px;
+	}
+}
+@media (max-width: 1480px) {
+	.photos-human__main {
+		padding: 40px 25px 5px;
+	}
+	.opView-tab__main {
+		padding: 0;
+		padding-bottom: 15px;
+	}
+	.opView-images {
+		width: 380px;
+	}
+	.opView-tab__content {
+    	width: calc(100% - 380px);
+	}
+	.opView-images .opView-images__block .opView-images__item {
+		height: 186px;
+	}
+	.sms-list__list {
+		width: 100%;
+		padding: 0;
+	}
+	.sms-list__list .col-md-3{
+		width: 33.3333%;
+	}
+	.sms-send__main {
+		padding: 15px;
+	}
+	.sms-send__main .col-md-8 {
+		width: 100%;
+	}
+	.sms-send__main .col-md-4 {
+		    width: 100%;
+    	margin: 15px 0;
+	}
+	.sms-send__main .search-form{
+		margin-bottom: 15px;
+	}
+	.sms-send__main .search-buttons .form-search__button {
+		margin: 22px 0 0 0;
+	}
+	.bootstrap-select>.dropdown-toggle {
+		position: relative;
+		width: 100%;
+		z-index: 1;
+		text-align: right;
+		white-space: nowrap;
+		font-size: 15px;
+		border-radius: 4px;
+		font-family: Geometria-Medium, sans-serif;
+		padding: 5px 20px 6px;
+		height: 32px;
+	}
+	.search-buttons .form-search__button button {
+		padding: 5px 15px;
+	}
+	.form-control {
+        border-radius: 4px;
+        font-size: 15px;
+        font-family: Rubik-Regular, sans-serif;
+        color: #495057;
+        height: 32px;
+        padding: 5px 15px 5px;
+        letter-spacing: 1.2px;
+    }
+	.delete-buttons {
+		padding: 25px 0 0;
+		text-align: right;
+	}
+	.search-results__main .table-main {
+		padding: 0;
+	}
+	.search-form__app {
+		padding: 15px 0;
+	}
+	.delete-buttons > button, .deletePart-buttons > button {
+		padding: 5px 15px;
+	}
+	.add-buttons .form-add__button > a {
+		padding: 5px 15px;
+	}
+	.search-buttons .form-search__button {
+		margin: 22px 0 0 0;
+	}
+	.add-buttons .form-add__button {
+		margin-top: 22px;
+	}
+	.deletePart-buttons {
+		padding: 0;
+		margin-top: 22px!important;
+	}
+	.send-buttons .saveMessageButton {
+		padding: 5px 15px;
+	}
+	.send-buttons .sendMessageButton {
+		padding: 5px 15px;
+	}
+	.statistics-results {
+		padding: 0 15px;
+		margin-bottom: 15px;
+	}
+	.opView-buttons .opView-edit_button {
+		padding: 5px 15px;
+	}
+	.content-header__user .dropdown-menu {
+		width: 210px;
+		right: -15px;
+		left: auto;
+	}
+	.deleteBook-buttons > button{
+		padding: 5px 15px;
+	}
+	.searchButton {
+		padding: 5px 15px;
+	}
+}
+@media (max-width: 1366px) {
+	.stol1-col-form {
+		padding: 15px 0 15px 0;
+	}
+	.stol2-col-form {
+		padding: 20px 10px;
+	}
+	.photos-human__main {
+	    padding: 40px 15px 5px;
+	}
+	.card-main .card-main__content .form-group .radio-group {
+		margin-right: 10px;
+	}
+	.content {
+		width: calc(100% - 290px);
+		padding: 0 15px 0 0;
+	}
+	.sidebar {
+		width: 225px;
+		min-height: 100vh;
+		height: auto;
+	}
+	.card-main .card-main__header {
+        padding: 7.5px 20px;
+        height: 35px;
+    }
+	.photos-upload__main {
+		padding: 20px 0 20px;
+	}
+    .form-send__buttons {
+		padding: 15px 15px;
+	}
+    footer {
+        padding: 15px 15px 15px 0;
+    }
+    .form-send__buttons .form-send__button {
+        margin-right: 0;
+    }
+    .content-header {
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(15, 135, 255, 0.3);
+        height: 60px;
+    }
+    .content-title {
+        padding: 5px 0;
+        height: 36px;
+    }
+    .content-title h2 {
+        font-size: 24px;
+    }
+    .content-title span {
+        font-size: 19px;
+        padding: 4px 0;
+    }
+    .card-main .card-main__content .form-group label {
+        font-size: 14px;
+        margin-bottom: 2px;
+    }
+
+    .avatar-upload .avatar-preview {
+        width: 100%;
+        height: 350px;
+    }
+    .card-main .card-main__content .form-group {
+        padding-bottom: 0;
+        margin-bottom: 5px;
+    }
+
+    .send-message .form-title h2 {
+        font-size: 18px;
+        margin: 0;
+    }
+    .card-main .card-main__content {
+        min-height: calc(100vh - 240px);
+        padding-bottom: 15px;
+        margin-bottom: 85px;
+    }
+    footer .footer-main {
+        padding: 12px 15px;
+        overflow: hidden;
+    }
+    .card-main .card-main__content {
+        min-height: calc(100vh - 206px);
+        padding-bottom: 15px;
+        margin-bottom: 75px
+    }
+    footer .copy {
+        font-size: 14px;
+    }
+    footer .dev {
+        font-size: 14px;
+    }
+    .form-send__buttons .form-send__button button {
+        padding: 5px 20px;
+        border-radius: 15px;
+    }
+    .form-send__buttons .form-reset__buttton button {
+        padding: 5px 20px;
+        border-radius: 15px;
+    }
+    .sidebar .nav li a {
+        padding: 7px 20px;
+        line-height: 19px;
+    }
+	.operator-add__form .col-md-4{
+		width: 50%;
+	}
+	.table-main table {
+		font-size: 15px;
+	}
+	.sidebar .nav li a {
+		font-size: 15px;
+	}
+	.sidebar .nav li ul li a {
+		font-size: 15px;
+		padding: 5px 0 5px 10px;
+	}
+	.lang-control a {
+		font-size: 14px;
+	}
+	.content-header__user a.dropdown-toggle {
+		font-size: 16px;
+	}
+	.help-block__icon .dropdown-menu {
+		min-width: 205px;
+	}
+	.help-block__icon .dropdown-menu li a {
+		line-height: 20px;
+		font-size: 14px;
+	}
+	.operator4-col .form-title h2{
+		font-size: 16px;
+		color: #0f87ff;
+		margin: 15px 0 5px;
+	}
+	.operator4-col .form-group.checkbox-form label > span, .operator4-col .form-group.radio-form label > span {
+		font-size: 15px;
+	}
+	.operator4-col__psixolog .form-title h2{
+		font-size: 16px;
+		margin: 0 0 5px;
+	}
+	.card-main .card-main__content .form-group label > span{
+		font-size: 15px;
+	}
+	.fingerprint-title{
+		font-size: 15px;
+	}
+	.operator4-col{
+		padding: 0 0px;
+	}
+}
+@media (max-width: 1270px) {
+	.card-main__content .col-md-4{
+		width: 50%;
+	}
+	.stol1-col-form {
+	    padding: 15px 10px;
+	}
+	.passport-upload__main.col-md-4{
+		width: 100%;
+	}
+	.photos-upload__main {
+	    padding: 0 15px 25px 15px;
+	}
+	.card-main__content .col-md-3{
+		width: 50%;
+	}
+	.card-main__content .col-md-6{
+		width: 100%;
+	}
+	.card-main__content .col-md-6 .col-md-6{
+		width: 50%;
+		float: left;
+	}
+}
+@media (max-width: 991px) {
+	.card-main__content .col-md-4{
+		width: 100%;
+	}
+	.passport-upload__main.col-md-4{
+		width: 100%;
+	}
+	.content-header__time{
+	    display: none;
+	}
+	.content-header .col-md-5{
+		width: 50%;
+		float: left;
+	}
+	.content-header .col-md-7{
+		width: 50%;
+		float: right;
+	}
+	footer .copy {
+	    width: 100%;
+	    text-align: center;
+	}
+	footer .dev {
+	    width: 100%;
+	    text-align: center;
+	    margin-top: 10px;
+	}
+	.card-main .card-main__content {
+	    margin-bottom: 115px;
+	}
+	.content {
+	    padding: 0 15px 0 0;
+	}
+	footer {
+	    padding: 5px 15px 15px 0;
+	}
+	.sidebar {
+    	width: 210px;
+	}
+	.sidebar .nav li a {
+	    padding: 10px 20px;
+	}
+	.content {
+    	width: calc(100% - 275px);
+	}
+
+}
+@media (max-width: 767px){
+	.sideRight {
+	    display: none;
+	}
+	.content-header {
+	    display: none;
+	}
+	.sidebar {
+	    width: 210px;
+	    display: none;
+	}
+	.content {
+	    width: calc(100%);
+	    padding: 0 15px;
+	}
+	footer {
+	    padding: 5px 15px 15px 15px;
+	}
+	.content-title h2 {
+	    font-size: 28px;
+	}
+	.form-send__buttons {
+	    text-align: left;
+	}
+	.photos-human__main {
+	    padding: 0 15px 5px;
+	}
+	.card-main__content .col-md-3{
+		width: 100%;
+	}
+}
+@media (max-width: 480px){
+	.card-main__content .col-md-6 .col-md-6{
+		width: 100%;
+		float: left;
+	}
+	.card-main .card-main__content {
+	    margin-bottom: 135px;
+	}
+	.content-title h2 {
+	    font-size: 26px;
+	}
+}

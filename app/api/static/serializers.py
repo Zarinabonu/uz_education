@@ -37,6 +37,7 @@ class CitySerializer(ModelSerializer):
         qs = Student.objects.filter(region_id__city_id=obj)
         return qs.count()
 
+
 class StaticSerializer(Serializer):
     teacher = serializers.SerializerMethodField(source='get_teacher')
     student = serializers.SerializerMethodField(source='get_student')

@@ -1,0 +1,90 @@
+{% extends 'administrator/_base.html' %}
+{% load static i18n %}
+
+{% block content %}
+    <div class="content-title">
+        <h2>Список врачей</h2>
+    </div>
+    <div class="card-main">
+        <div class="card-main__header">
+            <h2>Фильтр</h2>
+        </div>
+        <div class="card-main__content">
+            <div class="search-form__app">
+                <form action="">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="">Ф.И.О</label>
+                        <input name="fullname" type="text" class="form-control" id="" value="{{ fullname }}">
+                    </div>
+
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="">Пол</label>
+                        <select class="form-control selectpicker show-tick" name="gender" id="">
+                            <option value="">Выберите</option>
+                            <option value="m" {% if gender == 'm' %}selected{% endif %}>Мужчина</option>
+                            <option value="f" {% if gender == 'f' %}selected{% endif %}>Женщина</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="age">Возрост</label>
+                        <input type="text" name="age" id="age" class="form-control" value="{{ age }}" maxlength="5">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="search-buttons">
+                        <div class="form-search__button" id="">
+                            <button id="" type="submit">Поиск</button>
+                        </div>
+                    </div>
+                    <!--<div class="delete-buttons">
+                        <button id="deleteEmpButton" data-url="#">{% trans 'Delete' %}</button>
+                    </div>-->
+                </div>
+                <div class="clearfix"></div>
+            </form>
+            </div>
+            <div class="search-results__main">
+                <div class="table-main">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr class="table-row" data-href="#">
+                                <th  width="1%"></th>
+                                <th class="td-id">№</th>
+                                <th class="td-fio">ФИО</th>
+                                <th class="td-reg">{% trans 'Специальность' %}</th>
+                                <th class="td-phone">{% trans 'Номер телефона' %}</th>
+                                <th class="td-date">{% trans 'Добавлено' %}</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                           {% for doctor in doctors %}
+                                <tr class="table-row" data-id="{{ doctor.id }}" data-href="{% url 'admin_doctor_detail' doctor.id %}">
+                                    <td class="td-checkbox " >
+                                        <input class="deleteCheck" type="checkbox" data-id="doctor.id}}" name="ids" >
+                                    </td>
+                                    <td class="td-id">{{ doctor.id }}</td>
+                                    <td class="td-fio">{{ doctor.full_name|default_if_none:"" }}</td>
+                                    <td class="td-reg">{{ doctor.specialization_set.all.0 }}</td>
+                                    <td class="td-phone">{{ doctor.phone|default_if_none:"" }}</td>
+                                    <td class="td-date">{{ doctor.created|date:"H:i d.m.Y"|default_if_none:"" }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% include 'lib/pagination.html' %}
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'operator/js/root/search.js' %}"></script>
+{% endblock %}

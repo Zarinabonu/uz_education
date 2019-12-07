@@ -7,10 +7,10 @@ from app.model import Student, Teacher
 
 
 class StudentSerializer(ModelSerializer):
-    teacher_id = TeacherSerializer(read_only=True)
-    teacher_id_id = serializers.IntegerField(write_only=True)
-    region_id = RegionSerializer(read_only=True)
-    region_id_id = serializers.IntegerField(write_only=True)
+    teacher = TeacherSerializer(read_only=True)
+    teacher_id = serializers.IntegerField(write_only=True)
+    region = RegionSerializer(read_only=True)
+    region_id = serializers.IntegerField(write_only=True)
 
     class Meta:
         model = Student
@@ -21,10 +21,10 @@ class StudentSerializer(ModelSerializer):
                   'phone',
                   'start_date',
                   'finish_date',
+                  'teacher',
                   'teacher_id',
-                  'teacher_id_id',
-                  'region_id',
-                  'region_id_id')
+                  'region',
+                  'region_id')
 
     def update(self, instance, validated_data):
         raise_errors_on_nested_writes('update', self, validated_data)

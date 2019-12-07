@@ -1,0 +1,239 @@
+{% load static i18n %}
+
+{% get_current_language as LANGUAGE_CODE %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Uzhealth</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="{% static 'operator/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'operator/bootstrap/bootstrap-select/css/bootstrap-select.min.css' %}" rel="stylesheet">
+    <link href="{% static 'operator/fonts/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'operator/js/datepicker/bootstrap-datepicker.css' %}" />
+    <link rel="stylesheet" href="{% static 'magnific-popup/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'operator/fancybox/jquery.fancybox.css' %}">
+    <!-- styles -->
+    {% block css %}{% endblock %}
+
+    <link href="{% static 'operator/css/alerty.css' %}" rel="stylesheet">
+    <link href="{% static 'operator/css/styles.css' %}" rel="stylesheet">
+    <link href="{% static 'operator/css/media.css' %}" rel="stylesheet">
+
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="{% static 'operator/js/jquery.js' %}"></script>
+    <script src="{% static 'operator/js/csrf.js' %}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'operator/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'operator/js/jquery.inputmask.bundle.js' %}"></script>
+    <script src="{% static 'operator/bootstrap/bootstrap-select/js/bootstrap-select.min.js' %}"></script>
+    <script src="{% static 'operator/js/datepicker/bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'magnific-popup/jquery.magnific-popup.js' %}"></script>
+    <script src="{% static 'operator/fancybox/jquery.fancybox.js' %}"></script>
+    <script src="{% static 'operator/js/alerty.js' %}"></script>
+    <script src="{% static 'operator/js/delete.js' %}"></script>
+
+</head>
+<body>
+
+<section class="page-content">
+    <!-- sidebar-->
+    <div class="sidebar">
+        <div class="sidebar-box">
+            <div class="sidebar-header">
+                <div class="hader-logo">
+                    <a href="/">
+                        <img src="/static/operator/images/logo.svg" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="sidebar-menu menu">
+                <ul class="nav">
+                    <!-- Main menu -->
+                    <li class="current"><a href="#"><span>Список врачей</span></a></li>
+                    <li class="current"><a href="#"> <span>Операторы</span></a></li>
+                    <li class="current"><a href="#"><span>СМС, Э-Почта</span></a></li>
+                    <li class="current"><a href="#"><span>Статистика</span></a></li>
+{#                    <li class="current"><a href="#"><span>Логи</span></a></li>#}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="content-box">
+            <div class="content-header">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="content-header__right">
+                            <div class="content-header__time">
+                                <h2 id="time"></h2>
+                            </div>
+
+                            <div class="content-header__user">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-user fa-fw"></i> <span>{{ request.user.username }}</span> <i class="fa fa-caret-down"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li>
+                                        <a href="#"><i class="fa fa-sign-out fa-fw"></i> Выход</a>
+                                    </li>
+                                </ul>
+                            </div>
+{#                            <div class="lang-control">#}
+{#                                <a id="langRU" href="#" class="{% if LANGUAGE_CODE == 'ru' %}active{% endif %}" data-url="#" data-next="{{ request.get_full_path }}">#}
+{#                                    <img src="{% static 'operator/images/Russia-icon.png' %}" alt="">#}
+{#                                    {% trans 'Russian' %}#}
+{#                                </a>#}
+{#                                <a id="langEN" href="#" class="{% if LANGUAGE_CODE == 'en' %}active{% endif %}" data-url="#" data-next="{{ request.get_full_path }}">#}
+{#                                    <img src="{% static 'operator/images/United-kingdom-icon.png' %}" alt="">#}
+{#                                    {% trans 'English' %}#}
+{#                                </a>#}
+{#                            </div>#}
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            {% block content %}
+
+            {% endblock %}
+        </div>
+        <footer>
+            <div class="footer-main">
+                <div class="copy">
+                    © «Uzhealth CRM v1.0», 2019
+                </div>
+                <div class="dev">
+                    Разрабока CRM системы: <a href='#'>Online Service Group</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <div class="sideRight">
+        <div class="help-block">
+            <div class="help-block__icon">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-book" aria-hidden="true"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right animated flipInY">
+                        <ul class="dropdown-not">
+                            <li>
+                                <a href="#" data-id="">Медицинскии учреждении</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="#" data-id="">Типы медицинских учреждений</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="#" data-id="">Области</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="#" data-id="">Районы</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="#" data-id="">Университеты</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="#" data-id="">Факультеты</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="#" data-id="">Специальности</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bx-informer">
+            <div class="bx-im-informer-icon" style="background: #05b5ab;">
+                <a href="#" title="Список врачей">
+                    <i class="fa fa-list-alt" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+        <div class="bx-search">
+            <div class="bx-im-search-icon">
+                <a href="#">
+                    <i class="fa fa-cog" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="mainSuccess">{% trans 'Успешно сохранено' %}</div>
+    <div id="mainError">{% trans 'Произошла ошибка' %}</div>
+
+</section>
+<script src="{% static 'operator/js/custom.js' %}"></script>
+{% block js %}{% endblock %}
+<script>
+    path = window.location.pathname;
+    path = path.split("/");
+    if ("groups" === path[3]) {
+        document.getElementById("operator_groups_list").className = "active";
+        document.getElementById("navbar-ul").className = "active";
+    } else if ("operators" === path[2] && "groups" !== path[3]) {
+        document.getElementById("operator_list").className = "active";
+        document.getElementById("navbar-ul").className = "active";
+    }
+</script>
+<script>
+    //$('.sub-menu ul').hide();
+    $(".sub-menu > a").click(function (e) {
+        e.preventDefault();
+        //$(this).parent(".sub-menu").children("ul").slideToggle("100");
+        $(this).parent(".sub-menu").children("ul").toggleClass("active");
+        $(this).find(".right").toggleClass("fa-chevron-up fa-chevron-down");
+    });
+</script>
+<script>
+    $(function () {
+        $("#langRU").click(function (e) {
+            e.preventDefault();
+            let redirectUrl = $(this).data('next');
+            $.ajax({
+               type: 'POST',
+               data: `next=${'/' + window.location.pathname.substring(4)}&language=ru`,
+               url: $(this).data('url'),
+               success: function (data) {
+                   {#window.location.reload(true);#}
+                   window.location.href = '/' + window.location.pathname.substring(4);
+               },
+               error: function (data) {
+                   console.log('error');
+               },
+            });
+        });
+        $("#langEN").click(function (e) {
+            e.preventDefault();
+            let redirectUrl = $(this).data('next');
+            $.ajax({
+                type: 'POST',
+                data: `next=${'/' + window.location.pathname.substring(4)}&language=en`,
+                url: $(this).data('url'),
+                success: function (data) {
+                    window.location.reload(true);
+                    window.location.href = '/' + window.location.pathname.substring(4);
+                },
+                error: function (data) {
+                    console.log('error');
+                },
+            });
+        })
+    })
+</script>
+
+
+</body>
+</html>

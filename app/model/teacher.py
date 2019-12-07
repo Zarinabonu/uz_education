@@ -5,7 +5,7 @@ from app.model.region import Region
 
 
 class Teacher(models.Model):
-    region_id = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True)
+    region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True)
     f_name = models.TextField(null=True, blank=True)
     l_name = models.TextField(null=True, blank=True)
     m_name = models.TextField(null=True, blank=True)

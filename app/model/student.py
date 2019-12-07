@@ -5,8 +5,8 @@ from app.model.teacher import Teacher
 
 
 class Student(models.Model):
-    teacher_id = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
-    region_id = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True)
+    teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
+    region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True)
     f_name = models.TextField(null=True, blank=True)
     l_name = models.TextField(null=True, blank=True)
     m_name = models.TextField(null=True, blank=True)
