@@ -1,0 +1,261 @@
+{% extends 'administrator/_base.html' %}
+{% load static i18n %}
+
+{% block content %}
+    <div class="content-title">
+            <h2>Shifokorlarni ro'yxatga olish</h2>
+        </div>
+        <div class="card-main">
+            <div class="card-main__header">
+                <h2>Ro'yxatga olish shakli</h2>
+            </div>
+            <div class="card-main__content">
+                <form>
+                    <div class="dr-head__main">
+                        <div class="row">
+                            <div class="dr-head__col">
+                                <div class="dr-head__item">
+                                    <div class="form-group">
+                                        <label for="fullName">F.I.O</label>
+                                        <input name="full_name" type="text" class="form-control" id="fullName">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dr-head__col">
+                                <div class="dr-head__item">
+                                    <div class="form-group">
+                                        <label for="gender">Jinsi</label>
+                                        <select class="form-control selectpicker show-tick" name="gender" id="gender">
+                                            <option value="">Tanlang</option>
+                                            <option value="1">Erkak</option>
+                                            <option value="2">Ayol</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dr-head__col">
+                                <div class="dr-head__item">
+                                    <div class="form-group">
+                                        <label for="birthYear">Tug'ilgan yili</label>
+                                        <input name="birth_year" type="number" class="form-control" id="birthYear">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dr-head__col">
+                                <div class="dr-head__item">
+                                    <div class="form-group">
+                                        <label for="nation">Millati</label>
+                                        <select class="form-control selectpicker show-tick" name="nation" id="nation">
+                                            <option value="">Tanlang</option>
+                                            <option value="1">Uzbek</option>
+                                            <option value="2">Rus</option>
+                                            <option value="3">Qozoq</option>
+                                            <option value="4">Tojik</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="dr-head__col">
+                                <div class="dr-head__item">
+                                    <div class="form-group">
+                                        <label for="passportSerial">Pasport seriyasi</label>
+                                        <input name="passport_serial" type="text" class="form-control" id="passportSerial">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <hr class="main-hr">
+                    </div>
+                    <div class="dr-head__content">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="dr-head-content__item">
+                                    <div class="title">
+                                        <h2>Ma'lumoti</h2>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nameOfUniversity">Oliygoh nomi</label>
+                                        <select class="form-control selectpicker show-tick" name="name_of_university" id="nameOfUniversity">
+                                            <option value="">Tanlang</option>
+                                            <option value="1">ToshMI</option>
+                                            <option value="2">Buxoro davlat tibbiyot instituti</option>
+                                            <option value="3">Andijon davlat tibbiyot instituti</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="faculty">Fakultet</label>
+                                        <select class="form-control selectpicker show-tick" name="faculty" id="faculty">
+                                            <option value="">Tanlang</option>
+                                            <option value="1">Stomatologiya</option>
+                                            <option value="2">Davolash</option>
+                                            <option value="3">Pediator</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="yearOfCompletion">Tugatgan yili</label>
+                                        <input name="year_of_completion" type="text" class="form-control" id="yearOfCompletion">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="dr-head-content__item">
+                                    <div class="title">
+                                        <h2>Toifasi</h2>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="category">Toifa</label>
+                                        <select class="form-control selectpicker show-tick" name="category" id="category">
+                                            <option value="">Tanlang</option>
+                                            <option value="1">Oliy</option>
+                                            <option value="2">Birinchi</option>
+                                            <option value="3">Ikkinchi</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="CategorySpecialization">Toifa mutaxassisligi</label>
+                                        <input name="category_specialization" type="text" class="form-control" id="CategorySpecialization">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="categoryGivenYear">Berilgan yili</label>
+                                        <input name="category_given_year" type="text" class="form-control" id="categoryGivenYear">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="dr-head-content__item">
+                                    <div class="title">
+                                        <h2>Malaka oshirish</h2>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="upgradingSkills">Qaysi mutaxassislik bo'yicha</label>
+                                        <input name="upgrading_skills" type="text" class="form-control" id="upgradingSkills">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="upgradingYear">Malaka oshirgan yili</label>
+                                        <input name="upgrading_year" type="text" class="form-control" id="upgradingYear">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="upgradingHours">Malaka oshirish soati</label>
+                                        <input name="upgrading_hours" type="text" class="form-control" id="upgradingHours">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="dr-head-content__item">
+                                    <div class="title">
+                                        <h2>Vazifasi</h2>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="task">Vazifasi</label>
+                                        <input name="task" type="text" class="form-control" id="task">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="taskStartedYear">Boshlagan yili</label>
+                                        <input name="task_started_year" type="text" class="form-control" id="taskStartedYear">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="dr-head-content__item">
+                                    <div class="title">
+                                        <h2>Mutaxassisligi</h2>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="specialtyName">Mutaxassislik nomi</label>
+                                        <select class="form-control selectpicker show-tick" name="specialty_name" id="specialtyName">
+                                            <option value="">Tanlang</option>
+                                            <option value="1">Lor</option>
+                                            <option value="2">Psixolog</option>
+                                            <option value="3">Pediator</option>
+                                            <option value="4">Nevropotolog</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="specialtyStartedYear">Boshlagan yili</label>
+                                        <input name="specialty_started_year" type="text" class="form-control" id="specialtyStartedYear">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="dr-head-content__item">
+                                    <div class="title">
+                                        <h2>Tibbiy nomzodi</h2>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="medicalCandidate">Fan nomzodi</label>
+                                        <input name="medical_candidate" type="text" class="form-control" id="medicalCandidate">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="medicalCandidateGivenYear">Berilgan yili</label>
+                                        <input name="medical_candidate_given_year" type="text" class="form-control" id="medicalCandidateGivenYear">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-send__buttons">
+                        <div class="form-send__button">
+                            <button id="formSendButton" type="submit" data-url="wtf">Сохранить</button>
+                        </div>
+                        <!--<div class="form-reset__buttton">
+                            <button type="reset">Очистить</button>
+                        </div>-->
+                    </div>
+                </form>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+{% endblock %}
+{% block js %}
+    <script>
+        $(function () {
+            $("#formSendButton").click(function (event) {
+                event.preventDefault();
+
+                let formData = new FormData();
+                formData.append("full_name", $("input[name='full_name']").val());
+                formData.append("gender", $("select[name='gender']").val());
+                formData.append("birth_year", $("input[name='birth_year']").val());
+                formData.append("nation", $("select[name='nation']").val());
+                formData.append("passport_serial", $("input[name='passport_serial']").val());
+
+                formData.append("name_of_university", $("select[name='name_of_university']").val());
+                formData.append("faculty", $("select[name='faculty']").val());
+                formData.append("year_of_completion", $("input[name='year_of_completion']").val());
+
+                formData.append("name_of_universcategoryity", $("select[name='category']").val());
+                formData.append("category_specialization", $("input[name='category_specialization']").val());
+                formData.append("category_given_year", $("input[name='category_given_year']").val());
+
+                formData.append("upgrading_skills", $("input[name='upgrading_skills']").val());
+                formData.append("upgrading_year", $("input[name='upgrading_year']").val());
+                formData.append("upgrading_hours", $("input[name='upgrading_hours']").val());
+
+                formData.append("task", $("input[name='task']").val());
+                formData.append("task_started_year", $("input[name='task_started_year']").val());
+
+                formData.append("specialty_name", $("select[name='specialty_name']").val());
+                formData.append("specialty_started_year", $("input[name='specialty_started_year']").val());
+
+                formData.append("medical_candidate", $("input[name='medical_candidate']").val());
+                formData.append("medical_candidate_given_year", $("input[name='medical_candidate_given_year']").val());
+
+                $.ajax({
+                    url: $(this).data("url"),
+                    data: formData,
+                    type: "POST",
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        alert('Success');
+                    },
+                    error: function (data) {
+                        alert('Error')
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

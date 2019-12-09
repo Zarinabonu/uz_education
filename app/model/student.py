@@ -15,3 +15,7 @@ class Student(models.Model):
     created = models.DateField(auto_now_add=True)
     start_date = models.DateField()
     finish_date = models.DateField(null=True, blank=True)
+
+    @property
+    def get_full_name(self):
+        return self.f_name + ' ' + self.l_name + ' ' + self.m_name

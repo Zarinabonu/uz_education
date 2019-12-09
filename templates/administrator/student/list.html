@@ -51,22 +51,26 @@
                             <tr class="table-row" data-href="#">
                                 <th class="td-id">№</th>
                                 <th class="td-fio">ФИО</th>
-                                <th class="td-reg">{% trans 'Специальность' %}</th>
+                                <th class="td-reg">{% trans 'Учитель' %}</th>
                                 <th class="td-phone">{% trans 'Номер телефона' %}</th>
-                                <th class="td-date">{% trans 'Добавлено' %}</th>
+                                <th class="td-date">{% trans 'Дата начала' %}</th>
+                                <th class="td-date">{% trans 'Дата окончания' %}</th>
+
 
                             </tr>
                         </thead>
                         <tbody>
-                           {% for teacher in teachers %}
-                                <tr class="table-row" data-id="{{ teacher.id }}" data-href="#">
+                           {% for student in students %}
+                                <tr class="table-row" data-id="{{ student.id }}" data-href="#">
 {#                                //{% url 'admin_doctor_detail' teacher.id %}#}
 
-                                    <td class="td-id">{{ teacher.id }}</td>
-                                    <td class="td-fio">{{ teacher.get_full_name }}</td>
-                                    <td class="td-reg">{{ teacher.work_place }}</td>
-                                    <td class="td-phone">{{ teacher.phone|default_if_none:"" }}</td>
-                                    <td class="td-date">{{ teacher.created|date:" d.m.Y"|default_if_none:"" }}</td>
+                                    <td class="td-id">{{ student.id }}</td>
+                                    <td class="td-fio">{{ student.get_full_name }}</td>
+                                    <td class="td-reg">{{ student.teacher.get_full_name }}</td>
+                                    <td class="td-phone">{{ student.phone|default_if_none:"" }}</td>
+                                    <td class="td-date">{{ student.start_date|date:" d.m.Y"|default_if_none:"" }}</td>
+                                    <td class="td-date">{{ student.finish_date|date:" d.m.Y"|default_if_none:"" }}</td>
+
                                 </tr>
                             {% endfor %}
                         </tbody>

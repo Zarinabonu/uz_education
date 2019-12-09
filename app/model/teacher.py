@@ -14,3 +14,9 @@ class Teacher(models.Model):
     phone = models.IntegerField(null=True, blank=True)
     created = models.DateField(auto_now_add=True)
 
+    @property
+    def get_full_name(self):
+        return self.f_name + ' ' + self.l_name + ' ' + self.m_name
+
+
+

@@ -22,4 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('app.api.urls')),
     path('', views.Main.as_view(), name='teacher-create'),
+    path('create', views.CreateTeacher.as_view(), name='create'),
+    path('student/list', views.StudentList.as_view(), name='student-list'),
 ]

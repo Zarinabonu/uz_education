@@ -1,0 +1,350 @@
+{% extends 'administrator/_base.html' %}
+{% load static %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="content-title">
+        <h2>{{ doctor.full_name }}</h2>
+    </div>
+    <div class="card-main">
+        <div class="card-main__header">
+            <h2>Подробная информация</h2>
+        </div>
+        <div class="card-main__content">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="dr-head__content">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="dr-view-head__item">
+                                    <div class="title">
+                                        <h2>Личные данные</h2>
+                                    </div>
+                                    <div class="dr-view__head">
+                                        <ul>
+                                            <li><span>Ф.И.О:</span> {{doctor.full_name}}</li>
+                                            <li><span>Пол:</span> {% if doctor.gender == 0 %}
+                                                Мужчина
+                                                {% else %}
+                                                Женьщина
+                                            {% endif %}
+                                                </li>
+                                            <li><span>Год рождения:</span> {{ doctor.birth_date }}</li>
+                                            <li><span>Серия паспорта:</span> {{doctor.passport_serial}}</li>
+                                            <li><span>Национальность:</span>  {% if doctor.nationality == '1' %}
+                                                Узбек
+                                                {% elif doctor.nationality == '2' %}
+                                                Русский
+                                                {% elif doctor.nationality == '3' %}
+                                                Казах
+                                                {% elif doctor.nationality == '4' %}
+                                                Таджик
+                                            {% endif %}</li>
+                                        <li><span>Номер телефона:</span> {{ doctor.phone|default_if_none:"" }}</li>
+                                        <li><span>Электронная почта:</span> {{ doctor.email|default_if_none:"" }}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="detailButtons">
+{#
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="dr-head__content">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="dr-view-content__item">
+                                    <div class="title">
+                                        <h2>Образование</h2>
+                                    </div>
+                                    <div class="dr-view__content">
+                                        <ul>
+                                                {% for university in doctor.knowledge_set.all %}
+                                                <li><span>Название ВУЗа:</span> {{ university.university.name|default_if_none:"" }}</li>
+                                                <li><span>Факультет:</span> {{ university.faculty.name|default_if_none:"" }}</li>
+                                                <li><span>Год выпуска:</span> {{ university.year|default_if_none:"" }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="dr-view-content__item">
+                                    <div class="title">
+                                        <h2>Категория</h2>
+                                    </div>
+                                    <div class="dr-view__content">
+                                        <ul>
+                                            {% for type in doctor.type_set.all %}
+                                                        <li><span>Категория:</span> {{ type.type.name_ru|default_if_none:"" }}</li>
+                                                <li><span>Специальность категории:</span> {{ type.name|default_if_none:"" }}</li>
+                                                <li><span>Полученный год:</span> {{ type.year|default_if_none:"" }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="dr-view-content__item">
+                                    <div class="title">
+                                        <h2>Повыешение квалификации</h2>
+                                    </div>
+                                    <div class="dr-view__content">
+                                        <ul>
+                                             {% for training in doctor.training_set.all %}
+                                                <li><span>Специальность:</span> {{ training.speciality.name|default_if_none:"" }}</li>
+                                                <li><span>Год повышения квалификации:</span> {{ training.year|default_if_none:"" }}</li>
+                                                <li><span>Часы повышения квалификации:</span> {{ training.hours|default_if_none:"" }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="dr-view-content__item">
+                                    <div class="title">
+                                        <h2>Занимаемая должность</h2>
+                                    </div>
+                                    <div class="dr-view__content">
+                                        <ul>
+                                               {% for function in doctor.function_set.all %}
+                                                <li><span>Должность:</span> {{ function.name|default_if_none:"" }}</li>
+                                                <li><span>Начало работы (год):</span> {{ function.year|default_if_none:"" }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="dr-view-content__item">
+                                    <div class="title">
+                                        <h2>Специальность</h2>
+                                    </div>
+                                    <div class="dr-view__content">
+                                        <ul>
+                                           {% for specialization in doctor.specialization_set.all %}
+                                                        <li><span>Название специальности:</span> {{ specialization.speciality.name|default_if_none:"" }}</li>
+                                                <li><span>Год получение:</span> {{ specialization.year|default_if_none:"" }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="dr-view-content__item">
+                                    <div class="title">
+                                        <h2>Кандидат медицинских наук</h2>
+                                    </div>
+                                    <div class="dr-view__content">
+                                        <ul>
+                                            {% for medical_candidate in doctor.medicalcandidate_set.all %}
+                                                <li><span>Кандидат наук:</span> {{ medical_candidate.name|default_if_none:"" }}</li>
+                                                <li><span>Год выдачи:</span> {{ medical_candidate.year|default_if_none:"" }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+
+    <div id="jobCreatePopup" class="create-popup white-popup mfp-hide">
+        <form class="login">
+            <fieldset>
+                <legend class="legend">Ishxona biriktirish</legend>
+                <div class="popup-content">
+                    <div class="popup-content__item">
+                        <div class="form-group">
+                            <label for="city">Viloyat</label>
+                            <select class="form-control selectpicker show-tick" name="city" id="city">
+                                <option value="">Tanlang</option>
+                                {% for city in cities %}
+                                    <option value="{{ city.id }}">{{ city.name|default_if_none:"" }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="district">Tuman / Shahar</label>
+                            <select class="form-control selectpicker show-tick" name="district" id="district">
+                                <option value="">Tanlang</option>
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="type">Shifoxona</label>
+                            <select class="form-control selectpicker show-tick" name="institution" id="institution">
+                                <option value="">Tanlang</option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="save-buttons">
+                    <button id="saveJobButton" type="submit" class="saveButton" data-url="#">
+                        Saqlash
+                    </button>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+
+    <div id="jobTransferPopup" class="create-popup white-popup mfp-hide">
+        <form class="login">
+            <fieldset>
+                <legend class="legend">Ishxona ko'chirish</legend>
+                <div class="popup-content">
+                    <div class="popup-content__item">
+                        <div class="form-group">
+                            <label for="oldJob">Amaldagi ish joyi</label>
+                            <input name="old_job" type="text" class="form-control" id="oldJob" value="asdf" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="city">Viloyat</label>
+                            <select class="form-control selectpicker show-tick" name="city" id="city">
+                                <option value="">Tanlang</option>
+                                {% for city in cities %}
+                                    <option value="{{ city.id }}">{{ city.name|default_if_none:"" }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="district">Tuman / Shahar</label>
+                            <select class="form-control selectpicker show-tick" name="district" id="district">
+                                <option value="">Tanlang</option>
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="type">Shifoxona</label>
+                            <select class="form-control selectpicker show-tick" name="institution" id="institution">
+                                <option value="">Tanlang</option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="save-buttons">
+                    <button id="saveTransferButton" type="submit" class="saveButton" data-url="#">
+                        Saqlash
+                    </button>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        $(function () {
+            $('.open-jobCreate-link').magnificPopup({
+                type: 'inline',
+                midClick: true,
+                mainClass: 'mfp-fade'
+            });
+            $('.open-jobTransfer-link').magnificPopup({
+                type: 'inline',
+                midClick: true,
+                mainClass: 'mfp-fade'
+            });
+
+            $("#city").on('change', function(){
+               var city_id = $(this).val();
+
+               console.log(city_id);
+
+               var options = `<option value="">Tanlang</option>`;
+               $.get(`/api/v1/regions/district/list/?city_id=${city_id}`, function(data){
+                    $.each(data, function(key, value){
+                        console.log(value.id + ':' + value.name);
+                        options += `<option value="${value.id}">${value.name}</option>`;
+                    });
+
+                    $("#district").html(options);
+                    $('#district').selectpicker('refresh');
+               });
+
+            });
+
+            $("#district").on('change', function(){
+               var district_id = $(this).val();
+
+               console.log(district_id);
+
+               var options = `<option value="">Tanlang</option>`;
+               $.get(`/api/v1/districts/institution/list/?district_id=${district_id}`, function(data){
+                    $.each(data, function(key, value){
+                        console.log(value.id + ':' + value.name);
+                        options += `<option value="${value.id}">${value.name}</option>`;
+                    });
+
+                    $("#institution").html(options);
+                    $('#institution').selectpicker('refresh');
+               });
+
+            });
+
+            $("#saveJobButton").click(function (event) {
+                event.preventDefault();
+
+                let formData = new FormData();
+                formData.append("institution", $("select[name='institution']").val());
+
+                $.ajax({
+                    url: $(this).data("url"),
+                    data: formData,
+                    type: "POST",
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        alert('Success');
+                        location.reload();
+                    },
+                    error: function (data) {
+                        alert('Error')
+                    }
+                });
+            });
+
+            $("#saveTransferButton").click(function (event) {
+                event.preventDefault();
+
+                let formData = new FormData();
+                formData.append("institution", $("select[name='institution']").val());
+
+                $.ajax({
+                    url: $(this).data("url"),
+                    data: formData,
+                    type: "PUT",
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        alert('Success');
+                        location.reload();
+                    },
+                    error: function (data) {
+                        alert('Error')
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
