@@ -68,13 +68,23 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="work_place">Ishlash joyi</label>
-                                        <input name="work_place" type="text" class="form-control" id="work_place">
+                                        <label for="nameOfUniversity">O'qituvchi ismi</label>
+                                        <select class="form-control selectpicker show-tick" name="teacher" id="teacher">
+                                            {% for teacher in teacher_id %}
+                                            <option value="{{ teacher.id }}">{{ teacher.get_full_name }}</option>
+
+                                            {% endfor %}
+                                        </select>
                                     </div>
 
                                      <div class="form-group">
                                         <label for="phone">Telefon raqami</label>
                                         <input name="phone" type="text" class="form-control" id="phone">
+                                    </div>
+
+                                    <div class="form-group">
+                                            <label for="start_date">Boshlagan sana</label>
+                                            <input name="start_date" type="date" class="form-control" id="start_date">
                                     </div>
                                 </div>
                             </div>
@@ -83,7 +93,7 @@
                     </div>
                     <div class="form-send__buttons">
                         <div class="form-send__button">
-                            <button id="formSendButton" type="submit" data-url="{% url 'api-teacher-create' %}">Сохранить</button>
+                            <button id="formSendButton" type="submit" data-url="{% url 'api-student-create' %}">Сохранить</button>
                         </div>
                         <!--<div class="form-reset__buttton">
                             <button type="reset">Очистить</button>
@@ -108,6 +118,8 @@
                 formData.append("work_place", $("input[name='work_place']").val());
                 formData.append("phone", $("input[name='phone']").val());
                 formData.append('region_id', $('select[name="region"]').val());
+                formData.append('teacher_id', $('select[name="teacher"]').val());
+                formData.append("start_date", $("input[name='start_date']").val());
 
 
                 $.ajax({

@@ -103,10 +103,10 @@
 
             // Add data
             chart.data = [
-            {% for district in city.district_set.all %}
+            {% for district in city.region_set.all %}
                 {
-                  "country": "{{ district.name_ru }}",
-                  "litres": {{ district.getDoctorCount }}
+                  "country": "{{ district.name }}",
+                  "litres": {{ district.getTeacherCount }}
                 },
             {% endfor %}
             ];

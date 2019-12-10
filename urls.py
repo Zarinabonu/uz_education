@@ -21,7 +21,9 @@ from app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('app.api.urls')),
-    path('', views.Main.as_view(), name='teacher-create'),
+    path('', views.TeacherList.as_view(), name='teacher-list'),
     path('create', views.CreateTeacher.as_view(), name='create'),
     path('student/list', views.StudentList.as_view(), name='student-list'),
+    path('student/create', views.CreateStudent.as_view(), name='student-create'),
+    path('s/list', views.StaticList.as_view(), name='statistic-list'),
 ]

@@ -18,5 +18,13 @@ class Teacher(models.Model):
     def get_full_name(self):
         return self.f_name + ' ' + self.l_name + ' ' + self.m_name
 
+    def getTeacherCount(self):
+        c = 0
+        for t in self.region_set.all():
+            c += t.getTeacherCount
+        return c
+
+
+
 
 

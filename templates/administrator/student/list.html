@@ -9,35 +9,10 @@
         <div class="card-main__header">
             <h2>Фильтр</h2>
         </div>
-        <a href="{% url 'create' %}" type="button" class="btn btn-info m-t-10 float-right">Добавить</a>
+        <a href="{% url 'student-create' %}" type="button" class="btn btn-info m-t-10 float-right">Добавить</a>
         <div class="card-main__content">
             <div class="search-form__app">
                 <form action="">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="">Ф.И.О</label>
-                        <input name="fullname" type="text" class="form-control" id="" value="{{ fullname }}">
-                    </div>
-
-                </div>
-
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="age">Возрост</label>
-                        <input type="text" name="age" id="age" class="form-control" value="{{ age }}" maxlength="5">
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="search-buttons">
-                        <div class="form-search__button" id="">
-                            <button id="" type="submit">Поиск</button>
-                        </div>
-                    </div>
-
-                   <!--<div class="delete-buttons">
-                       <button id="deleteEmpButton" data-url="#">{% trans 'Delete' %}</button>
-                    </div>-->
-                </div>
 
 
                 <div class="clearfix"></div>
