@@ -2,13 +2,14 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer, raise_errors_on_nested_writes
 
-from app.api.city.serializers import CitySerializer
+
+from app.api.region.serializers import RegionSerializer
 from app.model import Operator
 
 
 class OperatorSerializer(ModelSerializer):
-    city = CitySerializer(read_only=True)
-    city_id = serializers.IntegerField(write_only=True)
+    region = RegionSerializer(read_only=True)
+    region_id = serializers.IntegerField(write_only=True)
     first_name = serializers.CharField(max_length=100, write_only=True)
     last_name = serializers.CharField(max_length=100, write_only=True)
     username = serializers.CharField(write_only=True)
@@ -22,9 +23,8 @@ class OperatorSerializer(ModelSerializer):
                   'last_name',
                   'm_name',
                   'phone',
-                  'city',
-                  'city_id',
-                  )
+                  'region',
+                  'region_id')
 
     def create(self, validated_data):
         username = validated_data.pop('username')

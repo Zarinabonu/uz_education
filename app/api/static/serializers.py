@@ -3,26 +3,15 @@ from datetime import datetime
 from rest_framework import serializers
 from rest_framework.serializers import Serializer, ModelSerializer
 
-from app.model import Teacher, Student, City
+from app.model import Teacher, Student, Region
 
 
-# class TeacherSerializer(ModelSerializer):
-#     class Meta:
-#         model = Teacher
-#         fields = ('id',
-#                   'f_name',
-#                   'l_name',
-#                   'm_name',
-#                   'work_place',
-#                   'passport_series',
-#                   'phone')
-#
-class CitySerializer(ModelSerializer):
+class RegionSerializer(ModelSerializer):
     teacher_count = serializers.SerializerMethodField()
     student_count = serializers.SerializerMethodField()
 
     class Meta:
-        model = City
+        model = Region
         fields = ('id',
                   'name',
                   'teacher_count',
@@ -30,11 +19,11 @@ class CitySerializer(ModelSerializer):
                   )
 
     def get_teacher_count(self, obj):
-        qs = Teacher.objects.filter(region_id__city_id=obj)
+        qs = Teacher.objects.filter(region_id=obj)
         return qs.count()
 
     def get_student_count(self,obj):
-        qs = Student.objects.filter(region_id__city_id=obj)
+        qs = Student.objects.filter(region_id=obj)
         return qs.count()
 
 
@@ -67,5 +56,5 @@ class StaticSerializer(Serializer):
         return Student.objects.filter(created__month=datetime.now().month).count()
 
     def get_region_teacher(self, obj):
-        qs = City.objects.all()
-        return CitySerializer(qs, many=True, context=self.context).data
+        qs = Region.objects.all()
+        return RegionSerializer(qs, many=True, context=self.context).data

@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
 
-from app.model import Region, Teacher, Student, City
+from app.model import Region, Teacher, Student, Operator
 
 
 class TeacherList(TemplateView):
@@ -37,7 +37,6 @@ class TeacherList(TemplateView):
             context = {
                 'teachers': teacher
             }
-
         return context
 
 
@@ -81,13 +80,31 @@ class StaticList(TemplateView):
     template_name = 'administrator/statistics/city.html'
 
     def get_context_data(self, **kwargs):
+        t_list = []
+        s_list = []
+        r_list = []
+        op = Operator.objects.get(user=self.request.user)
+        regions = Region.objects.all()
+        student = Student.objects.all()
         teacher = Teacher.objects.all()
-        cities = City.objects.all()
+        for r in regions:
+            stu = student.filter(region=r).count()
+            s_list.append(stu)
+            tea = teacher.filter(region=r).count()
+            t_list.append(tea)
+
+        r_list = list(zip(s_list, t_list))
+        fields = ['students', 'teacher']
+        dicts = [dict(zip(fields, l)) for l in r_list]
+        print('listsss:', dicts)
         context = {
             'teacher_id': teacher,
-            'city': cities,
+            'student_id': student,
+            'lists': dicts,
         }
-        print('cities', cities)
+
+
+        # context['male_cnt'] = Teacher.objects.filter(work_place=op.institution, gender=0).count()
 
         return context
 
