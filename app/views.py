@@ -1,3 +1,4 @@
+from datetime import datetime
 
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
@@ -82,25 +83,49 @@ class StaticList(TemplateView):
     def get_context_data(self, **kwargs):
         t_list = []
         s_list = []
-        r_list = []
+        region_list = []
+        latest_stu_list = []
+        latest_teach_list = []
         op = Operator.objects.get(user=self.request.user)
         regions = Region.objects.all()
         student = Student.objects.all()
         teacher = Teacher.objects.all()
+        teacher_all = teacher.count()
+        student_all = student.count()
         for r in regions:
             stu = student.filter(region=r).count()
             s_list.append(stu)
             tea = teacher.filter(region=r).count()
             t_list.append(tea)
-
-        r_list = list(zip(s_list, t_list))
-        fields = ['students', 'teacher']
+            region_list.append(r)
+        s_list = t_list = region_list =range(20)
+        r_list = list(zip(s_list, t_list,region_list))
+        fields = ['students', 'teacher', 'id']
         dicts = [dict(zip(fields, l)) for l in r_list]
-        print('listsss:', dicts)
+        dt = datetime.today().month
+
+        latest_student = student.filter(start_date__month=dt)
+        latest_s_count = latest_student.count()
+        latest_stu_list.append(latest_s_count)
+        latest_teacher = teacher.filter(created__month=dt)
+        latest_t_count = latest_teacher.count()
+        latest_teach_list.append(latest_t_count)
+
+        latest_list = list(zip(latest_stu_list, latest_teach_list))
+        fileds_latest = ['latest_stu', 'latest_teach']
+        diction = [dict(zip(fileds_latest, f)) for f in latest_list]
+
+        print(dicts)
+
         context = {
             'teacher_id': teacher,
             'student_id': student,
             'lists': dicts,
+            'teachers_all': teacher_all,
+            'students_all': student_all,
+            'latest_students':latest_student,
+            'latest_teachers': latest_teacher,
+            'latest_count': diction,
         }
 
 
