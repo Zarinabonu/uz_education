@@ -1,0 +1,431 @@
+{% extends 'administrator/_base.html' %}
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="{% static 'src/assets/sass/lbd/_cards.scss' %}"></script>
+    <meta name="description" content="JSMaps - Responsive Javascript Maps - http://jsmaps.io">
+    <meta name="author" content="LGLab">
+   <!-- Demo scripts -->
+   <link href='https://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" rel="stylesheet" type="text/css" />
+
+
+    <title>Title</title>
+    {% block css %}
+        <style>
+        .card {
+            border-radius: 4px;
+            background-color: #fff;
+            margin-bottom: 30px;
+        }
+        .card {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-clip: border-box;
+            border: 3px solid #134761;
+            border-radius: .25rem;
+            background-color: #dceefd;
+        }
+        .card-stats .card-body {
+            padding: 15px 15px 0;
+        }
+        .card .card-body {
+            padding: 15px 15px 10px;
+        }
+        .card-body {
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+            padding: 1.25rem;
+        }
+        .row {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+        .col-5 {
+            -ms-flex: 0 0 41.666667%;
+            flex: 0 0 41.666667%;
+            max-width: 41.666667%;
+        }
+        .col-7 {
+            -ms-flex: 0 0 58.333333%;
+            flex: 0 0 58.333333%;
+            max-width: 58.333333%;
+        }
+        .card-stats .card-body .numbers {
+            font-size: 1.8rem;
+            text-align: right;
+        }
+        .card-stats .card-body .numbers p {
+            margin-bottom: 0;
+        }
+        .card .card-title {
+            margin: 0;
+            color: #333;
+            font-weight: 300;
+        }
+        .card-stats .card-footer {
+            padding: 0 15px 10px;
+        }
+        .card .card-footer {
+            padding-top: 0;
+            background-color: transparent;
+            line-height: 30px;
+            border-top: none!important;
+            font-size: 14px;
+        }
+        .card-footer:last-child {
+            border-radius: 0 0 calc(.25rem - 1px) calc(.25rem - 1px);
+        }
+        .card-footer {
+            padding: .75rem 1.25rem;
+            background-color: rgba(0,0,0,.03);
+            border-top: 1px solid rgba(0,0,0,.125);
+        }
+        @media (min-width: 1200px)
+        .col-xl-3 {
+            -ms-flex: 0 0 25%;
+            flex: 0 0 25%;
+            max-width: 25%;
+        }
+        @media (min-width: 768px)
+        .col-md-6 {
+            -ms-flex: 0 0 50%;
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+        .card-stats .icon-big {
+            font-size: 3em;
+            min-height: 64px;
+        }
+        .text-center {
+            text-align: center!important;
+        }
+        .card-stats .icon-big i {
+        .card-stats .icon-big i {card-body
+            line-height: 59px;
+        }
+        .text-warning, .text-warning:hover {
+            color: #ff9500!important;
+        }
+        .nc-icon {
+            display: inline-block;
+            font: normal normal normal 14px/1 'nucleo-icons';
+            font-size: inherit;
+            speak: none;
+            text-transform: none;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .text-success, .text-success:hover {
+            color: #87cb16!important;
+        }
+        .text-success {
+            color: #28a745!important;
+        }
+                *, :after, :before {
+            box-sizing: border-box;
+        }
+        .card-stats .card-body .numbers p {
+            margin-bottom: 0;
+        }
+        .card .card-category, .card label {
+            font-size: 14px;
+            font-weight: 400;
+            color: #9a9a9a;
+            margin-bottom: 0;
+        }
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .alert, .brand, .btn-simple, .h1, .h2, .h3, .h4, .h5, .h6, .navbar, .td-name, a, body, button.close, h1, h2, h3, h4, h5, h6, p, td {
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            font-family: Roboto,Helvetica Neue,Arial,sans-serif;
+            font-weight: 400;
+        }
+        <!--  -->
+        html {
+          box-sizing: border-box;
+        }
+        *, *:before, *:after {
+          box-sizing: inherit;
+        }
+
+        body {
+          font-family: 'Droid Sans', sans-serif;
+          background:#f2f2f2;
+          font-size:14px;
+          line-height:21px;
+        }
+
+        .container {
+          width: 960px;
+          margin:20px auto;
+        }
+
+        @media only screen and (min-width: 768px) and (max-width: 1000px) {
+          .container {
+            width: 768px;
+          }
+        }
+        @media only screen and (max-width: 767px) {
+          .container {
+            width: 420px;
+          }
+        }
+        @media only screen and (max-width: 480px) {
+          .container {
+            width: 300px;
+          }
+        }
+
+        a img {
+          border:none;
+        }
+
+        h1, h2, h3, h4, h5, h6{
+          font-weight:normal;
+        }
+        h1{
+          font-size:26px;
+          line-height:32px;
+        }
+        p, ul{
+          margin-bottom:10px;
+        }
+        </style>
+    {% endblock %}
+
+</head>
+{% block content %}
+    <div class="row">
+
+        <div class="col-xl-3 col-md-3">
+            <div class="card card-stats"><!----> <!---->
+                <div class="card-body"><div class="row">
+                    <div class="col-5"><div class="icon-big text-center">
+                        <div class="icon-warning">
+                            <i class="nc-icon nc-chart text-warning"></i>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col-7">
+                        <div class="numbers">
+                            <div><p class="card-category">Teacher</p>
+                                <h4 class="card-title">{{ teachers_all }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="card-footer"><hr>
+                    <div class="stats">
+                        <div><i class="fa fa-refresh"></i>Updated now
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-3">
+            <div class="card card-stats">
+                <!----> <!---->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="icon-big text-center">
+                                <div class="icon-success">
+                                    <i class="nc-icon nc-light-3 text-success"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <div class="numbers">
+                                <div><p class="card-category">Student</p>
+                                    <h4 class="card-title">{{ students_all }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer"><hr>
+                    <div class="stats">
+                        <div><i class="fa fa-calendar-o"></i>Last day
+              </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-3">
+            <div class="card card-stats">
+                <!----> <!---->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="icon-big text-center">
+                                <div class="icon-danger">
+                                    <i class="nc-icon nc-vector text-danger"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <div class="numbers">
+                                <div><p class="card-category">Teacher latest</p>
+                                    <h4 class="card-title">{{ teachers_latest }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer"><hr>
+                    <div class="stats">
+                        <div><i class="fa fa-clock-o"></i>Last day
+              </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-3">
+            <div class="card card-stats">
+                <!----> <!---->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="icon-big text-center">
+                                <div class="icon-info">
+                                    <i class="nc-icon nc-favourite-28 text-primary"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <div class="numbers">
+                                <div><p class="card-category">Student latest</p>
+                                    <h4 class="card-title">{{ students_latest }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer"><hr>
+                    <div class="stats">
+                        <div><i class="fa fa-refresh"></i>Updated now
+              </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="map"></div>
+
+    <!-- Map html - add the below to your page -->
+
+  <script>
+
+
+          var simplemaps_countrymap_mapdata = {
+              main_settings: {
+                  //General settings
+                  width: "300", //or 'responsive'
+                  background_color: "#FFFFFF",
+                  background_transparent: "yes",
+                  border_color: "#ffffff",
+                  pop_ups: "detect",
+
+                  //State defaults
+                  state_description: "State description",
+                  state_color: "#88A4BC",
+                  state_hover_color: "#3B729F",
+                  state_url: "",
+                  border_size: 1.5,
+                  all_states_inactive: "no",
+                  all_states_zoomable: "yes",
+
+                  //Label defaults
+                  label_color: "#d5ddec",
+                  label_hover_color: "#d5ddec",
+                  label_size: 22,
+                  label_font: "Arial",
+                  hide_labels: "no",
+                  hide_eastern_labels: "no",
+
+                  //Zoom settings
+                  zoom: "yes",
+                  manual_zoom: "yes",
+                  back_image: "no",
+                  initial_back: "no",
+                  initial_zoom: "-1",
+                  initial_zoom_solo: "no",
+                  region_opacity: 1,
+                  region_hover_opacity: 0.6,
+                  zoom_out_incrementally: "yes",
+                  zoom_percentage: 0.99,
+                  zoom_time: 0.5,
+
+                  //Popup settings
+                  popup_color: "white",
+                  popup_opacity: 0.9,
+                  popup_shadow: 1,
+                  popup_corners: 5,
+                  popup_font: "12px/1.5 Verdana, Arial, Helvetica, sans-serif",
+                  popup_nocss: "no",
+
+                  //Advanced settings
+                  div: "map",
+                  auto_load: "yes",
+                  url_new_tab: "no",
+                  images_directory: "default",
+                  fade_time: 0.1,
+                  link_text: "View Website"
+              },
+              state_specific: {
+                {% for static in statistic %}
+                    {{ static.region }}: {
+                          name: "{{ static.region_name}}",
+                          description: " Teacher :{{ static.teacher_count | length}} \n"  +
+                                        "Student: {{ static.student_count | length }}",
+                          color: "default",
+                          hover_color: "default",
+                          url: "default"
+                      },
+                {% endfor %}
+
+              },
+              locations: {
+                  "0": {
+                      lat: "41.316667",
+                      lng: "69.25",
+                      name: "Tashkent"
+                  }
+              }
+          };
+
+
+  </script>
+<script src="{% static 'countrymap.js' %}"></script>
+
+    <script type="text/javascript">
+
+    $(function() {
+
+      $('#uzbekistan-map').JSMaps({
+        map: 'uzbekistan'
+      });
+
+    });
+
+</script>
+{% endblock %}
+</body>
+</html>

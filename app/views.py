@@ -78,60 +78,98 @@ class CreateStudent(TemplateView):
 
 
 class StaticList(TemplateView):
-    template_name = 'administrator/statistics/city.html'
+    template_name = 'administrator/statistics/card.html'
 
     def get_context_data(self, **kwargs):
-        t_list = []
-        s_list = []
+        student_list = []
+        teacher_list = []
         region_list = []
-        latest_stu_list = []
-        latest_teach_list = []
-        op = Operator.objects.get(user=self.request.user)
-        regions = Region.objects.all()
-        student = Student.objects.all()
+        region_name_list = []
+
         teacher = Teacher.objects.all()
         teacher_all = teacher.count()
+        student = Student.objects.all()
         student_all = student.count()
-        for r in regions:
-            stu = student.filter(region=r).count()
-            s_list.append(stu)
-            tea = teacher.filter(region=r).count()
-            t_list.append(tea)
-            region_list.append(r)
-        s_list = t_list = region_list =range(20)
-        r_list = list(zip(s_list, t_list,region_list))
-        fields = ['students', 'teacher', 'id']
-        dicts = [dict(zip(fields, l)) for l in r_list]
-        dt = datetime.today().month
+        teacher_lat = teacher.filter(created__month=datetime.today().month)
+        teacher_latest = teacher_lat.count()
+        student_lat = student.filter(start_date__month=datetime.today().month)
+        student_latest = student_lat.count()
+        region = Region.objects.all()
 
-        latest_student = student.filter(start_date__month=dt)
-        latest_s_count = latest_student.count()
-        latest_stu_list.append(latest_s_count)
-        latest_teacher = teacher.filter(created__month=dt)
-        latest_t_count = latest_teacher.count()
-        latest_teach_list.append(latest_t_count)
+        for r in region:
+            teacher_zip_list = teacher.filter(region=r)
+            teacher_list.append(teacher_zip_list)
+            student_zip_list = student.filter(region=r)
+            student_list.append(student_zip_list)
+            region_list.append(r.id)
+            region_name_list.append(r.name)
 
-        latest_list = list(zip(latest_stu_list, latest_teach_list))
-        fileds_latest = ['latest_stu', 'latest_teach']
-        diction = [dict(zip(fileds_latest, f)) for f in latest_list]
-
-        print(dicts)
+        response = [{'region':r_id, 'region_name':r_name , 'teacher_count':t_c, 'student_count':s_c} for r_id, r_name, t_c, s_c in zip(region_list, region_name_list, teacher_list, student_list)]
+        print('STATISTIC:', response)
 
         context = {
-            'teacher_id': teacher,
-            'student_id': student,
-            'lists': dicts,
             'teachers_all': teacher_all,
             'students_all': student_all,
-            'latest_students':latest_student,
-            'latest_teachers': latest_teacher,
-            'latest_count': diction,
+            'teachers_latest': teacher_latest,
+            'students_latest': student_latest,
+            'statistic': response,
         }
 
-
-        # context['male_cnt'] = Teacher.objects.filter(work_place=op.institution, gender=0).count()
-
         return context
+    # template_name = 'administrator/statistics/city.html'
+    #
+    # def get_context_data(self, **kwargs):
+    #     t_list = []
+    #     s_list = []
+    #     region_list = []
+    #     latest_stu_list = []
+    #     latest_teach_list = []
+    #     op = Operator.objects.get(user=self.request.user)
+    #     regions = Region.objects.all()
+    #     student = Student.objects.all()
+    #     teacher = Teacher.objects.all()
+    #     teacher_all = teacher.count()
+    #     student_all = student.count()
+    #     for r in regions:
+    #         stu = student.filter(region=r).count()
+    #         s_list.append(stu)
+    #         tea = teacher.filter(region=r).count()
+    #         t_list.append(tea)
+    #         region_list.append(r.id)
+    #     #s_list = t_list = region_list =range(20)
+    #     r_list = list(zip(s_list, t_list,region_list))
+    #     fields = ['students', 'teacher', 'id']
+    #     dicts = [dict(zip(fields, l)) for l in r_list]
+    #     dt = datetime.today().month
+    #
+    #     latest_student = student.filter(start_date__month=dt)
+    #     latest_s_count = latest_student.count()
+    #     latest_stu_list.append(latest_s_count)
+    #     latest_teacher = teacher.filter(created__month=dt)
+    #     latest_t_count = latest_teacher.count()
+    #     latest_teach_list.append(latest_t_count)
+    #
+    #     latest_list = list(zip(latest_stu_list, latest_teach_list))
+    #     fileds_latest = ['latest_stu', 'latest_teach']
+    #     diction = [dict(zip(fileds_latest, f)) for f in latest_list]
+    #
+    #     print(dicts)
+    #
+    #     context = {
+    #         'teacher_id': teacher,
+    #         'student_id': student,
+    #         'lists': dicts,
+    #         'teachers_all': teacher_all,
+    #         'students_all': student_all,
+    #         'latest_students':latest_student,
+    #         'latest_teachers': latest_teacher,
+    #         'latest_count': diction,
+    #     }
+    #
+    #
+    #     # context['male_cnt'] = Teacher.objects.filter(work_place=op.institution, gender=0).count()
+
+        # return context
 
 
 # Create your views here.
