@@ -30,6 +30,9 @@
                                 <th class="td-phone">{% trans 'Номер телефона' %}</th>
                                 <th class="td-date">{% trans 'Дата начала' %}</th>
                                 <th class="td-date">{% trans 'Дата окончания' %}</th>
+                                {% if request.user.is_superuser %}
+                                    <th class="td-date">{% trans 'Region' %}</th>
+                                {% endif %}
 
 
                             </tr>
@@ -45,6 +48,9 @@
                                     <td class="td-phone">{{ student.phone|default_if_none:"" }}</td>
                                     <td class="td-date">{{ student.start_date|date:" d.m.Y"|default_if_none:"" }}</td>
                                     <td class="td-date">{{ student.finish_date|date:" d.m.Y"|default_if_none:"" }}</td>
+                                    {% if request.user.is_superuser %}
+                                        <td class="td-date">{{ student.region.name }}</td>
+                                    {% endif %}
 
                                 </tr>
                             {% endfor %}

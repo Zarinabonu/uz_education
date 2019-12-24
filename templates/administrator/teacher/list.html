@@ -37,6 +37,9 @@
                                 <th class="td-reg">{% trans 'Специальность' %}</th>
                                 <th class="td-phone">{% trans 'Номер телефона' %}</th>
                                 <th class="td-date">{% trans 'Добавлено' %}</th>
+                                {% if request.user.is_superuser %}
+                                    <th class="td-date">{% trans 'region' %}</th>
+                                {% endif %}
 
                             </tr>
                         </thead>
@@ -50,6 +53,9 @@
                                     <td class="td-reg">{{ teacher.work_place }}</td>
                                     <td class="td-phone">{{ teacher.phone|default_if_none:"" }}</td>
                                     <td class="td-date">{{ teacher.created|date:" d.m.Y"|default_if_none:"" }}</td>
+                                    {% if request.user.is_superuser %}
+                                        <td class="td-date">{{ teacher.region.name }}</td>
+                                    {% endif %}
                                 </tr>
                             {% endfor %}
                         </tbody>

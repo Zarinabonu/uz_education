@@ -1,6 +1,11 @@
 from datetime import datetime
 
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
+from django.views import View
 from django.views.generic import TemplateView, ListView
 
 from app.model import Region, Teacher, Student, Operator
@@ -11,8 +16,12 @@ class TeacherList(TemplateView):
     list = []
 
     def get_context_data(self, **kwargs):
+        u = User.objects.get(username=self.request.user.username)
+        o = Operator.objects.get(user=u)
         region = Region.objects.all()
         teacher = Teacher.objects.all()
+        if not u.is_superuser:
+            teacher = teacher.filter(region=o.region)
         fio_search = self.request.GET.get('fio_search')
         work_place_search = self.request.GET.get('work_palce_search')
         for t in teacher:
@@ -45,7 +54,11 @@ class CreateTeacher(TemplateView):
     template_name = 'administrator/teacher/create.html'
 
     def get_context_data(self, **kwargs):
+        u = User.objects.get(username=self.request.user.username)
+        o = Operator.objects.get(user=u)
         region = Region.objects.all()
+        if not o.user.is_superuser:
+            region = region.filter(name=o.region.name)
         context = {
             'region_id': region
         }
@@ -56,7 +69,11 @@ class StudentList(TemplateView):
     template_name = 'administrator/student/list.html'
 
     def get_context_data(self, **kwargs):
+        u = User.objects.get(username=self.request.user.username)
+        o = Operator.objects.get(user=u)
         student = Student.objects.all()
+        if not o.user.is_superuser:
+            student = student.filter(region=o.region)
         context = {
             'students': student
         }
@@ -68,8 +85,14 @@ class CreateStudent(TemplateView):
     template_name = 'administrator/student/create.html'
 
     def get_context_data(self, **kwargs):
+        u = User.objects.get(username=self.request.user.username)
+        o = Operator.objects.get(user=u)
         teacher = Teacher.objects.all()
         region = Region.objects.all()
+        if not o.user.is_superuser:
+            teacher = teacher.filter(region=o.region)
+        if not o.user.is_superuser:
+            region = region.filter(name=o.region.name)
         context = {
             'teacher_id': teacher,
             'region_id': region
@@ -85,14 +108,23 @@ class StaticList(TemplateView):
         teacher_list = []
         region_list = []
         region_name_list = []
-
+        u = User.objects.get(username=self.request.user.username)
+        o = Operator.objects.get(user=u)
         teacher = Teacher.objects.all()
+        if not o.user.is_superuser:
+            teacher = teacher.filter(region=o.region)
         teacher_all = teacher.count()
         student = Student.objects.all()
+        if not o.user.is_superuser:
+            student = student.filter(region=o.region)
         student_all = student.count()
         teacher_lat = teacher.filter(created__month=datetime.today().month)
+        if not o.user.is_superuser:
+            teacher_lat = teacher_lat.filter(region=o.region)
         teacher_latest = teacher_lat.count()
         student_lat = student.filter(start_date__month=datetime.today().month)
+        if not o.user.is_superuser:
+            student_lat = student_lat.filter(region=o.region)
         student_latest = student_lat.count()
         region = Region.objects.all()
 
@@ -116,6 +148,29 @@ class StaticList(TemplateView):
         }
 
         return context
+
+
+class RegisterTemplate(TemplateView):
+    template_name = 'register/index.html'
+
+    def post(self, request):
+        username = self.request.POST.get('username')
+        password = self.request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        print('User1', username)
+        print('User1', password)
+
+        if user is not None:
+            login(request, user)
+            print('User2', user)
+        return HttpResponseRedirect(reverse('teacher-list'))
+
+
+class LogOut(View):
+    def get(self, request):
+        logout(request)
+        return HttpResponse('200')
+
     # template_name = 'administrator/statistics/city.html'
     #
     # def get_context_data(self, **kwargs):
