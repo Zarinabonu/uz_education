@@ -6,7 +6,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView
+from django.db.models import Q
+
 
 from app.model import Region, Teacher, Student, Operator
 
@@ -23,7 +25,7 @@ class TeacherList(TemplateView):
         if not u.is_superuser:
             teacher = teacher.filter(region=o.region)
         fio_search = self.request.GET.get('fio_search')
-        work_place_search = self.request.GET.get('work_palce_search')
+        region_search = self.request.GET.get('region_search')
         for t in teacher:
             name = t.f_name
             last = t.l_name
@@ -38,12 +40,12 @@ class TeacherList(TemplateView):
                 'full_name': list
             }
         if fio_search:
-            teacher = teacher.get(get_full_name=fio_search)
+            teacher = teacher.filter(Q(f_name=fio_search) | Q(l_name=fio_search) | Q(m_name=fio_search))
             context = {
                 'teachers': teacher,
             }
-        elif work_place_search:
-            teacher = teacher.get(work_place=work_place_search)
+        elif region_search:
+            teacher = teacher.filter(region__id=region_search)
             context = {
                 'teachers': teacher
             }
@@ -65,6 +67,36 @@ class CreateTeacher(TemplateView):
         return context
 
 
+class TeacherDetail(DetailView):
+    template_name = 'administrator/teacher/detail.html'
+    pk_url_kwarg = 'id'
+    # model = ()
+    model = Teacher
+    context_object_name = 'teacher'
+
+    def get_context_data(self, **kwargs):
+        region = Region.objects.filter(id=self.kwargs['id'])
+        teach = Teacher.objects.get(id=self.kwargs['id'])
+        student = Student.objects.all()
+        student = student.filter(teacher__id=self.kwargs['id'])
+        context = {
+            'region_id': region,
+            'teacher':teach,
+            'students': student,
+        }
+        return context
+
+    # def get_context_data(self, **kwargs):
+    #     teacher = Teacher.objects.all()
+    #     teacher_id = self.request.GET.get('teacher_id')
+    #     teacher = teacher.get(id=teacher_id)
+    #     context = {
+    #         'teacher_detail': teacher,
+    #     }
+    #
+    #     return context
+
+
 class StudentList(TemplateView):
     template_name = 'administrator/student/list.html'
 
@@ -72,10 +104,28 @@ class StudentList(TemplateView):
         u = User.objects.get(username=self.request.user.username)
         o = Operator.objects.get(user=u)
         student = Student.objects.all()
+        region = Region.objects.all()
+        teach = Teacher.objects.all()
         if not o.user.is_superuser:
             student = student.filter(region=o.region)
+            teach = teach.filter(region=o.region)
+
+        fio_search = self.request.GET.get('fio_search')
+        region_search = self.request.GET.get('region_search')
+        teacher_search = self.request.GET.get('teacher_search')
+
+        if fio_search:
+            student = student.filter(Q(f_name=fio_search) | Q(l_name=fio_search) | Q(m_name=fio_search))
+        elif region_search:
+            student = student.filter(region__id=region_search)
+        elif teacher_search:
+            student = student.filter(teacher__id=teacher_search)
+
         context = {
-            'students': student
+            'students': student,
+            'region_id': region,
+            'teacher': teach,
+
         }
 
         return context
@@ -98,6 +148,24 @@ class CreateStudent(TemplateView):
             'region_id': region
         }
         return context
+
+
+class StudentDetail(DetailView):
+    template_name = 'administrator/student/detail.html'
+    pk_url_kwarg = 'id'
+    model = Student
+    context_object_name = 'student'
+
+    def get_context_data(self, **kwargs):
+        reg = Region.objects.all()
+        reg = reg.filter(id=self.kwargs['id'])
+        stu = Student.objects.get(id=self.kwargs['id'])
+        context = {
+            'student': stu,
+            'regions': reg
+        }
+        return context
+
 
 
 class StaticList(TemplateView):

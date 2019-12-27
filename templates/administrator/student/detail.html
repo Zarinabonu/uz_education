@@ -8,7 +8,7 @@
 {% block content %}
 
     <div class="content-title">
-        <h2>{{ doctor.full_name }}</h2>
+        <h2>{{ student.get_full_name }}</h2>
     </div>
     <div class="card-main">
         <div class="card-main__header">
@@ -26,31 +26,21 @@
                                     </div>
                                     <div class="dr-view__head">
                                         <ul>
-                                            <li><span>Ф.И.О:</span> {{doctor.full_name}}</li>
-                                            <li><span>Пол:</span> {% if doctor.gender == 0 %}
-                                                Мужчина
-                                                {% else %}
-                                                Женьщина
-                                            {% endif %}
-                                                </li>
-                                            <li><span>Год рождения:</span> {{ doctor.birth_date }}</li>
-                                            <li><span>Серия паспорта:</span> {{doctor.passport_serial}}</li>
-                                            <li><span>Национальность:</span>  {% if doctor.nationality == '1' %}
-                                                Узбек
-                                                {% elif doctor.nationality == '2' %}
-                                                Русский
-                                                {% elif doctor.nationality == '3' %}
-                                                Казах
-                                                {% elif doctor.nationality == '4' %}
-                                                Таджик
-                                            {% endif %}</li>
-                                        <li><span>Номер телефона:</span> {{ doctor.phone|default_if_none:"" }}</li>
-                                        <li><span>Электронная почта:</span> {{ doctor.email|default_if_none:"" }}</li>
-                                        </ul>
+                                            <li><span>Ф.И.О:</span> {{student.get_full_name}}</li>
+
+                                            <li><span>Год рождения:</span> {{ student.birth_date }}</li>
+                                            <li><span>Серия паспорта:</span> {{student.passport_serial}}</li>
+                                            <li><span>Национальность:</span>
+                                            {% for region in regions %}
+                                                <option name="region_search" value="{{ region.id }}">{{ region.name }}</option>
+                                            {% endfor %}
+                                            <li><span>Номер телефона:</span> {{ student.phone|default_if_none:"" }}</li>
+                                            <li><span>Дата начала:</span> {{ student.start_date }}</li>
+                                            <li><span>Дата окончания:</span> {{ student.start_date }}</li>                                        </ul>
                                     </div>
                                 </div>
                                 <div class="detailButtons">
-{#
+
                                 </div>
                             </div>
 
@@ -58,105 +48,7 @@
                         <div class="clearfix"></div>
                     </div>
                 </div>
-                <div class="col-md-9">
-                    <div class="dr-head__content">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="dr-view-content__item">
-                                    <div class="title">
-                                        <h2>Образование</h2>
-                                    </div>
-                                    <div class="dr-view__content">
-                                        <ul>
-                                                {% for university in doctor.knowledge_set.all %}
-                                                <li><span>Название ВУЗа:</span> {{ university.university.name|default_if_none:"" }}</li>
-                                                <li><span>Факультет:</span> {{ university.faculty.name|default_if_none:"" }}</li>
-                                                <li><span>Год выпуска:</span> {{ university.year|default_if_none:"" }}</li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="dr-view-content__item">
-                                    <div class="title">
-                                        <h2>Категория</h2>
-                                    </div>
-                                    <div class="dr-view__content">
-                                        <ul>
-                                            {% for type in doctor.type_set.all %}
-                                                        <li><span>Категория:</span> {{ type.type.name_ru|default_if_none:"" }}</li>
-                                                <li><span>Специальность категории:</span> {{ type.name|default_if_none:"" }}</li>
-                                                <li><span>Полученный год:</span> {{ type.year|default_if_none:"" }}</li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="dr-view-content__item">
-                                    <div class="title">
-                                        <h2>Повыешение квалификации</h2>
-                                    </div>
-                                    <div class="dr-view__content">
-                                        <ul>
-                                             {% for training in doctor.training_set.all %}
-                                                <li><span>Специальность:</span> {{ training.speciality.name|default_if_none:"" }}</li>
-                                                <li><span>Год повышения квалификации:</span> {{ training.year|default_if_none:"" }}</li>
-                                                <li><span>Часы повышения квалификации:</span> {{ training.hours|default_if_none:"" }}</li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="dr-view-content__item">
-                                    <div class="title">
-                                        <h2>Занимаемая должность</h2>
-                                    </div>
-                                    <div class="dr-view__content">
-                                        <ul>
-                                               {% for function in doctor.function_set.all %}
-                                                <li><span>Должность:</span> {{ function.name|default_if_none:"" }}</li>
-                                                <li><span>Начало работы (год):</span> {{ function.year|default_if_none:"" }}</li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="dr-view-content__item">
-                                    <div class="title">
-                                        <h2>Специальность</h2>
-                                    </div>
-                                    <div class="dr-view__content">
-                                        <ul>
-                                           {% for specialization in doctor.specialization_set.all %}
-                                                        <li><span>Название специальности:</span> {{ specialization.speciality.name|default_if_none:"" }}</li>
-                                                <li><span>Год получение:</span> {{ specialization.year|default_if_none:"" }}</li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="dr-view-content__item">
-                                    <div class="title">
-                                        <h2>Кандидат медицинских наук</h2>
-                                    </div>
-                                    <div class="dr-view__content">
-                                        <ul>
-                                            {% for medical_candidate in doctor.medicalcandidate_set.all %}
-                                                <li><span>Кандидат наук:</span> {{ medical_candidate.name|default_if_none:"" }}</li>
-                                                <li><span>Год выдачи:</span> {{ medical_candidate.year|default_if_none:"" }}</li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
 
             <div class="clearfix"></div>

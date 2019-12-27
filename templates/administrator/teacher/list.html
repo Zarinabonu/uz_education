@@ -1,5 +1,8 @@
 {% extends 'administrator/_base.html' %}
 {% load static i18n %}
+<head>
+    {% block css %}{% endblock %}
+</head>
 
 {% block content %}
     <div class="content-title">
@@ -12,19 +15,40 @@
         <a href="{% url 'create' %}" type="button" class="btn btn-info m-t-10 float-right">Добавить</a>
         <div class="card-main__content">
             <div class="search-form__app">
-                <form action="">
+                <form action="{% url 'teacher-list' %}" method="GET">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="">Ф.И.О</label>
+                        <input name="fio_search" type="text" class="form-control" id="" value="{{ get_full_name }}">
+                    </div>
+
+                </div>
+                {% if request.user.is_superuser %}
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="">Область</label>
+                        <select class="form-control select picker show-tick" name="region_search" id="">
+                            <option value="">Выберите</option>
+                            {% for region in region_id %}
+                                <option name="region_search" value="{{ region.id }}">{{ region.name }}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+                </div>
+                {% endif %}
 
                 <div class="col-md-3">
-
-
-                   <!--<div class="delete-buttons">
-                       <button id="deleteEmpButton" data-url="#">{% trans 'Delete' %}</button>
+                    <div class="search-buttons">
+                        <div class="form-search__button" id="">
+                            <button  id="searchButton" type="submit">Поиск</button>
+                        </div>
+                    </div>
+                    <!--<div class="delete-buttons">
+                        <button id="deleteEmpButton" data-url="#">{% trans 'Delete' %}</button>
                     </div>-->
                 </div>
-
-
                 <div class="clearfix"></div>
-
             </form>
             </div>
             <div class="search-results__main">
@@ -45,8 +69,7 @@
                         </thead>
                         <tbody>
                            {% for teacher in teachers %}
-                                <tr class="table-row" data-id="{{ teacher.id }}" data-href="#">
-{#                                //{% url 'admin_doctor_detail' teacher.id %}#}
+                                <tr  class="table-row" data-id="{{ teacher.id }}" data-href="{% url 'teacher-detail' teacher.id %}">
 
                                     <td class="td-id">{{ teacher.id }}</td>
                                     <td class="td-fio">{{ teacher.get_full_name }}</td>
@@ -69,4 +92,39 @@
 
 {% block js %}
     <script src="{% static 'operator/js/root/search.js' %}"></script>
+{#    <script>#}
+{#        $(function () {#}
+{#            $("#searchButton").click(function (event) {#}
+{#                event.preventDefault();#}
+{##}
+{#                let formData = new FormData();#}
+{#                formData.append("fio_search", $("input[name='get_full_name']").val());#}
+{#                formData.append('work_palce_search', $('select[name="region"]').val());#}
+{##}
+{##}
+{#                $.ajax({#}
+{#                    url: $(this).data("url"),#}
+{#                    data: formData,#}
+{#                    type: "POST",#}
+{#                    contentType: false,#}
+{#                    processData: false,#}
+{#                    success: function (data) {#}
+{#                        var x = document.getElementById("mainSuccess");#}
+{#                        x.className = "show";#}
+{#                        setTimeout(function(){#}
+{#                            x.className = x.className.replace("show", "");#}
+{#                            location.reload();#}
+{#                        }, 1500);#}
+{#                        window.location.href = '/teacher/list';#}
+{#                    },#}
+{#                    error: function (data) {#}
+{#                        var x = document.getElementById("mainError");#}
+{##}
+{#                        x.className = "show";#}
+{#                        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);#}
+{#                    }#}
+{#                });#}
+{#            });#}
+{#        });#}
+{#    </script>#}
 {% endblock %}

@@ -12,9 +12,51 @@
         <a href="{% url 'student-create' %}" type="button" class="btn btn-info m-t-10 float-right">Добавить</a>
         <div class="card-main__content">
             <div class="search-form__app">
-                <form action="">
+                <form action="{% url 'student-list' %}" method="GET">
+                    <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="">Ф.И.О</label>
+                        <input name="fio_search" type="text" class="form-control" id="" value="{{ get_full_name }}">
+                    </div>
 
+                </div>
+                {% if request.user.is_superuser %}
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="">Область</label>
+                        <select class="form-control select picker show-tick" name="region_search" id="">
+                            <option value="">Выберите</option>
+                            {% for region in region_id %}
+                                <option name="region_search" value="{{ region.id }}">{{ region.name }}</option>
+                            {% endfor %}
 
+                        </select>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="">Учитель</label>
+                        <select class="form-control select picker show-tick" name="teacher_search" id="">
+                            <option value="">Выберите</option>
+                            {% for teach in teacher %}
+                                <option name="teacher_search" value="{{ teach.id }}">{{ teach.get_full_name }}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="search-buttons">
+                        <div class="form-search__button" id="">
+                            <button  id="searchButton" type="submit">Поиск</button>
+                        </div>
+                    </div>
+                    <!--<div class="delete-buttons">
+                        <button id="deleteEmpButton" data-url="#">{% trans 'Delete' %}</button>
+                    </div>-->
+                </div>
                 <div class="clearfix"></div>
 
             </form>
@@ -39,7 +81,7 @@
                         </thead>
                         <tbody>
                            {% for student in students %}
-                                <tr class="table-row" data-id="{{ student.id }}" data-href="#">
+                                <tr class="table-row" data-id="{{ student.id }}" data-href="{% url 'student-detail' student.id %}">
 {#                                //{% url 'admin_doctor_detail' teacher.id %}#}
 
                                     <td class="td-id">{{ student.id }}</td>
