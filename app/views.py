@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -13,16 +14,16 @@ from django.db.models import Q
 from app.model import Region, Teacher, Student, Operator
 
 
-class TeacherList(TemplateView):
+class TeacherList(LoginRequiredMixin, TemplateView):
     template_name = 'administrator/teacher/list.html'
     list = []
 
     def get_context_data(self, **kwargs):
         u = User.objects.get(username=self.request.user.username)
-        o = Operator.objects.get(user=u)
         region = Region.objects.all()
         teacher = Teacher.objects.all()
         if not u.is_superuser:
+            o = Operator.objects.get(user=u)
             teacher = teacher.filter(region=o.region)
         fio_search = self.request.GET.get('fio_search')
         region_search = self.request.GET.get('region_search')
@@ -52,7 +53,7 @@ class TeacherList(TemplateView):
         return context
 
 
-class CreateTeacher(TemplateView):
+class CreateTeacher(LoginRequiredMixin, TemplateView):
     template_name = 'administrator/teacher/create.html'
 
     def get_context_data(self, **kwargs):
@@ -67,7 +68,7 @@ class CreateTeacher(TemplateView):
         return context
 
 
-class TeacherDetail(DetailView):
+class TeacherDetail(LoginRequiredMixin, DetailView):
     template_name = 'administrator/teacher/detail.html'
     pk_url_kwarg = 'id'
     # model = ()
@@ -97,16 +98,16 @@ class TeacherDetail(DetailView):
     #     return context
 
 
-class StudentList(TemplateView):
+class StudentList(LoginRequiredMixin, TemplateView):
     template_name = 'administrator/student/list.html'
 
     def get_context_data(self, **kwargs):
         u = User.objects.get(username=self.request.user.username)
-        o = Operator.objects.get(user=u)
         student = Student.objects.all()
         region = Region.objects.all()
         teach = Teacher.objects.all()
         if not o.user.is_superuser:
+            o = Operator.objects.get(user=u)
             student = student.filter(region=o.region)
             teach = teach.filter(region=o.region)
 
@@ -131,7 +132,7 @@ class StudentList(TemplateView):
         return context
 
 
-class CreateStudent(TemplateView):
+class CreateStudent(LoginRequiredMixin, TemplateView):
     template_name = 'administrator/student/create.html'
 
     def get_context_data(self, **kwargs):
@@ -150,7 +151,7 @@ class CreateStudent(TemplateView):
         return context
 
 
-class StudentDetail(DetailView):
+class StudentDetail(LoginRequiredMixin, DetailView):
     template_name = 'administrator/student/detail.html'
     pk_url_kwarg = 'id'
     model = Student
@@ -167,8 +168,7 @@ class StudentDetail(DetailView):
         return context
 
 
-
-class StaticList(TemplateView):
+class StaticList(LoginRequiredMixin, TemplateView):
     template_name = 'administrator/statistics/card.html'
 
     def get_context_data(self, **kwargs):
@@ -177,21 +177,24 @@ class StaticList(TemplateView):
         region_list = []
         region_name_list = []
         u = User.objects.get(username=self.request.user.username)
-        o = Operator.objects.get(user=u)
         teacher = Teacher.objects.all()
-        if not o.user.is_superuser:
+        if not u.is_superuser:
+            o = Operator.objects.get(user=u)
             teacher = teacher.filter(region=o.region)
         teacher_all = teacher.count()
         student = Student.objects.all()
-        if not o.user.is_superuser:
+        if not u.is_superuser:
+            o = Operator.objects.get(user=u)
             student = student.filter(region=o.region)
         student_all = student.count()
         teacher_lat = teacher.filter(created__month=datetime.today().month)
-        if not o.user.is_superuser:
+        if not u.is_superuser:
+            o = Operator.objects.get(user=u)
             teacher_lat = teacher_lat.filter(region=o.region)
         teacher_latest = teacher_lat.count()
         student_lat = student.filter(start_date__month=datetime.today().month)
-        if not o.user.is_superuser:
+        if not u.is_superuser:
+            o = Operator.objects.get(user=u)
             student_lat = student_lat.filter(region=o.region)
         student_latest = student_lat.count()
         region = Region.objects.all()
