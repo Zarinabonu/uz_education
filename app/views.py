@@ -106,7 +106,7 @@ class StudentList(LoginRequiredMixin, TemplateView):
         student = Student.objects.all()
         region = Region.objects.all()
         teach = Teacher.objects.all()
-        if not o.user.is_superuser:
+        if not u.is_superuser:
             o = Operator.objects.get(user=u)
             student = student.filter(region=o.region)
             teach = teach.filter(region=o.region)
